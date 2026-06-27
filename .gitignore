@@ -1,0 +1,16 @@
+# Local by Flywheel / system artifacts
+.thumbnail
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor / IDE
+.vscode/
+*.code-workspace.bak
+
+# Dependencies (future-proof)
+node_modules/
+
+# Logs / temp
+*.log
+*.tmp

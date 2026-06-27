@@ -1,0 +1,175 @@
+/* ============================================================
+   TATRA RUNNING — design refresh
+   Tokens + base. "Outdoor premium": calm cream, ink black,
+   one orange accent, cinematic dark sections.
+   ============================================================ */
+
+:root {
+  /* Brand palette (confirmed by client) */
+  --bg:        #f4f6f0;   /* body background, warm off-white */
+  --paper:     #ffffff;   /* cards / surfaces */
+  --ink:       #000000;   /* headings */
+  --body:      #333333;   /* body copy */
+  --muted:     #7d7d7d;   /* secondary text */
+  --accent:    #F65824;   /* price / key CTA accent */
+  --accent-ink:#d8410f;   /* darker accent for text on light */
+  --green:     #6f9b3f;   /* logo green, used very sparingly */
+
+  /* Dark cinematic sections */
+  --dark:      #14130f;
+  --dark-2:    #1d1b16;
+  --on-dark:   #f4f6f0;
+  --on-dark-mut:#a7a59c;
+
+  /* Lines & shadows */
+  --line:      #e3e4dd;
+  --line-2:    #d5d6cd;
+  --line-dark: rgba(255,255,255,.14);
+  --shadow-sm: 0 1px 2px rgba(20,19,15,.05);
+  --shadow:    0 12px 30px -12px rgba(20,19,15,.18);
+  --shadow-lg: 0 40px 80px -32px rgba(20,19,15,.45);
+
+  /* Radii */
+  --r-sm: 6px;
+  --r:    12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Type */
+  --display: 'Archivo', system-ui, sans-serif;
+  --sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --script:  'Caveat', cursive;
+
+  /* Layout */
+  --maxw: 1240px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --header-h: 105px;
+  --topbar-h: 42px;
+  --sticky-top: calc(105px + 42px + 16px);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  color: var(--ink);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ---------- Type scale ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+}
+.eyebrow {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.eyebrow--mut { color: var(--muted); }
+.lead { font-size: clamp(18px, 2vw, 21px); color: var(--body); line-height: 1.55; }
+
+/* ---------- Layout helpers ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+.wrap--wide { max-width: 1440px; }
+.section { padding-block: clamp(56px, 9vw, 120px); }
+.stack > * + * { margin-top: 1rem; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  font-family: var(--sans); font-weight: 700; font-size: 16px;
+  padding: 15px 26px; border-radius: 999px; border: 1.5px solid transparent;
+  min-height: 52px; line-height: 1;
+  transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn--accent { background: var(--accent); color: #fff; }
+.btn--accent:hover { background: var(--accent-ink); box-shadow: 0 10px 24px -10px rgba(246,88,36,.6); }
+.btn--ink { background: var(--ink); color: #fff; }
+.btn--ink:hover { background: #2a2a26; }
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+.btn--ghost:hover { border-color: var(--ink); }
+.btn--on-dark { background: var(--on-dark); color: var(--ink); }
+.btn--on-dark:hover { background: #fff; }
+.btn--ghost-dark { background: transparent; color: var(--on-dark); border-color: var(--line-dark); }
+.btn--ghost-dark:hover { border-color: var(--on-dark); }
+.btn--lg { min-height: 60px; padding: 18px 34px; font-size: 17px; }
+.btn--block { width: 100%; }
+.btn--sm { min-height: 44px; padding: 11px 18px; font-size: 16px; }
+
+/* ---------- Logo tile (keeps original logo intact on any bg) ---------- */
+.logo-tile {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fbfcf8; border-radius: 10px;
+  padding: 8px 12px; box-shadow: var(--shadow-sm);
+}
+.logo-tile img { height: 100%; width: auto; }
+
+/* ---------- Pills / badges ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+  background: #fff; border: 1px solid var(--line); color: var(--body);
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+  padding: 6px 11px; border-radius: 999px;
+}
+.badge--open  { background: #e8f3e0; color: #3f6b1f; }
+.badge--few   { background: #fdecd8; color: #b5560e; }
+.badge--full  { background: #ececec; color: #8a8a8a; }
+.badge--new   { background: var(--ink); color: #fff; }
+
+.dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+/* ---------- Misc ---------- */
+.hairline { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.fade-in { animation: fade .5s ease both; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Striped placeholder for missing imagery */
+.ph {
+  background-color: #e7e8e0;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.04) 0 12px, transparent 12px 24px);
+  display: flex; align-items: center; justify-content: center;
+  color: #9a9b90; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: .04em;
+  text-align: center; padding: 16px;
+}
+
+/* Scrollbar tidy for horizontal rails */
+.no-bar::-webkit-scrollbar { display: none; }
+.no-bar { scrollbar-width: none; }
+
+/* Focus visibility */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
