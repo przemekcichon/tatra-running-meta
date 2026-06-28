@@ -7,6 +7,9 @@
        - .site-header bez .site-header--hidden (scroll-hide = Faza 3)
        - .mm-overlay z atrybutem hidden (otwarcie menu = Faza 3)
        - kontrolka konta = statyczny placeholder; orb Aury = Faza 4
+     KANONICZNE ŹRÓDŁO chrome: ten plik jest źródłem prawdy headera;
+       kopie wklejone inline w *.html odtwarzają ten markup 1:1
+       (mechanizm include = decyzja Fazy 3/5). Zmiany nanoś TU i propaguj.
      Mapowanie na header.php nastąpi w Fazie 5.
      ============================================================ -->
 <header class="site-header">
@@ -63,7 +66,7 @@
         <a href="koszyk.html" class="cart-btn" aria-label="Koszyk, 0 pozycji">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg>
         </a>
-        <a href="#menu" class="burger" aria-label="Otwórz menu" aria-controls="mobile-menu" aria-expanded="false">
+        <a href="#mobile-menu" class="burger" aria-label="Otwórz menu" aria-controls="mobile-menu" aria-expanded="false">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>
         </a>
       </div>
