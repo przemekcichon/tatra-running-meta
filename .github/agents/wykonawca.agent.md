@@ -31,6 +31,8 @@ Jesteś agentem **wykonawcą** w cyklu fazowym projektu Tatra Running. Realizuje
 ### Krok 1 — Ground-truth (TYLKO DO ODCZYTU)
 Otwierasz fazę zadaniem read-only wg [ground-truth-start-fazy.prompt.md](../prompts/ground-truth-start-fazy.prompt.md): zrzut realnego stanu kodu, który ta faza konsumuje — **literały w backtickach** (klucze, nazwy pól, slugi, meta_key, nazwy funkcji przepisane z kodu), kształty danych jako skomentowany JSON, pola opcjonalne i ich warunki, sygnatury reużywalnych helperów, oraz jawne „czy istnieje już kod robiący to, co ma robić ta faza (Tak/Nie + gdzie)”. BEZ propozycji zmian. Czytasz kod, nie pamięć.
 
+> **Po dostarczeniu ground-truth ZATRZYMAJ się i czekaj na „realizuj”/„kontynuuj” człowieka** zanim przejdziesz do Kroku 2. NIE generuj żadnego promptu — w szczególności NIE produkuj „promptu na realizację tej fazy” (sam ją realizujesz w tej samej sesji). Kolejny prompt powstaje dopiero w **Kroku 6**, po zamknięciu CAŁEJ fazy.
+
 ### Krok 2 — Realizacja
 Implementujesz etap **w obrębie zadeklarowanego zakresu fazy**. Trzymasz się ground-truth: nowy kod czyta dokładnie to, co poprzedni zapisał (te same literały, te same kształty). Jeśli ground-truth ujawni, że **faza jest za duża** — sygnalizujesz to i proponujesz podział, zanim brniesz dalej.
 
