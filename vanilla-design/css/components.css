@@ -305,9 +305,11 @@
 .camps-empty h3 { font-family: var(--display); color: var(--ink); font-size: 24px; margin: 14px 0 8px; }
 .camps-empty p { font-size: 15px; line-height: 1.5; margin-bottom: 22px; }
 
-/* reveal */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity: 1; transform: none; }
+/* reveal — progressive enhancement: hidden only when JS is active.
+   reveal.js (Faza 3) adds `.js` on <html> before observing; without JS
+   (static Faza 2) content stays fully visible. */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
 
 /* ---------------- HERO (cinematic, full-bleed) ---------------- */
 .hero { position: relative; min-height: min(92vh, 880px); display: flex; align-items: flex-end; overflow: hidden; }
