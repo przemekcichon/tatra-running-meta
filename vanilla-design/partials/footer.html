@@ -1,0 +1,81 @@
+<!-- ============================================================
+     PARTIAL: footer (chrome)
+     Port 1:1 z react-design/chrome.jsx → Footer + NewsletterSignup.
+     Trasy hash → pliki .html. Modal potwierdzenia newslettera (JS) = Faza 3.
+     Formularz bez action (makieta); Gravity Forms + Mailchimp = Faza 5.
+     Mapowanie na footer.php nastąpi w Fazie 5.
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="wrap wrap--wide">
+    <div class="footer-news">
+      <div class="footer-news__text">
+        <div class="eyebrow">Newsletter</div>
+        <h3>Nie przegap kolejnej wyprawy</h3>
+        <p>Nowe obozy, wolne miejsca i historie z gór — prosto na Twój e-mail. Bez spamu, kilka razy w sezonie.</p>
+      </div>
+      <div class="footer-news__signup">
+        <form class="footer-news__form">
+          <input type="email" placeholder="Twój e-mail" aria-label="E-mail do newslettera" required />
+          <button class="btn btn--accent" type="submit">
+            Zapisz się <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg>
+          </button>
+        </form>
+        <p class="footer-news__legal">
+          Przeczytaj nasze <a href="zasady-newslettera.html">zasady wysyłki</a> newslettera oraz o tym <a href="prywatnosc.html">jak przetwarzamy</a> Twoje dane.
+        </p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo-frame">
+          <span class="logo-tile logo-tile--card">
+            <img src="assets/logo.webp" alt="Tatra Running" />
+            <span class="logo-tile__tagline">Bieganie. Skitury. Obozy. Treningi. Czternasty rok wypraw biegowych i skiturowych w góry świata.</span>
+          </span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Wyprawy</h4>
+        <a href="obozy.html">Wszystkie obozy</a>
+        <a href="obozy.html">Obozy biegowe</a>
+        <a href="obozy.html">Obozy skiturowe</a>
+        <a href="obozy.html">Kids</a>
+        <a href="obozy.html">Junior</a>
+        <a href="bony.html">Bony podarunkowe</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tatra Running</h4>
+        <a href="zespol.html">Zespół</a>
+        <a href="partnerzy.html">Partnerzy</a>
+        <a href="blog.html">Blog</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <h4>Pomoc</h4>
+        <a href="dokumenty.html">Dokumenty prawne</a>
+        <a href="regulamin.html">Regulamin sklepu</a>
+        <a href="zasady-newslettera.html">Zasady newslettera</a>
+        <a href="prywatnosc.html">Przetwarzanie danych</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="tel:+48500152300">+48 500 152 300</a>
+        <a href="mailto:contact@tatrarunning.pl">contact@tatrarunning.pl</a>
+        <p style="color:var(--on-dark-mut);font-size:14px;margin-top:12px">
+          Organizator turystyki wpisany do Rejestru Organizatorów Turystyki Marszałka Województwa Małopolskiego.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap wrap--wide">
+    <div class="footer-bottom">
+      <span>© 2026 Tatra Running</span>
+      <div class="footer-social">
+        <a class="social-btn" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+        <a class="social-btn" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+        <a class="social-btn" href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
