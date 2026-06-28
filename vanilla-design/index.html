@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tatra Running — obozy biegowe i skiturowe</title>
+  <meta name="description" content="Tatra Running — obozy biegowe i skiturowe, treningi i bony podarunkowe. Czternasty sezon wypraw w góry świata." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <!-- ===== HEADER (kopia inline; KANONICZNE ŹRÓDŁO: partials/header.html) ===== -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="topbar__inner">
+        <div class="topbar__left">
+          <a class="topbar__item" href="tel:+48500152300"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg> +48 500 152 300</a>
+          <a class="topbar__item topbar__item--mail" href="mailto:contact@tatrarunning.pl"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><polyline points="3 7 12 13 21 7" /></svg> contact@tatrarunning.pl</a>
+          <span class="topbar__item topbar__item--hours"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18L14 7l-3.2 5.5L9 9.5 3 20Z" /></svg> 14. sezon w górach</span>
+        </div>
+        <div class="topbar__right">
+          <a href="zespol.html" class="topbar__link">Zespół</a>
+          <a href="partnerzy.html" class="topbar__link">Partnerzy</a>
+          <a href="dokumenty.html" class="topbar__link">Pomoc</a>
+          <span class="topbar__divider" aria-hidden="true"></span>
+          <a href="blog.html" class="topbar__link">Blog</a>
+          <a href="kontakt.html" class="topbar__link">Kontakt</a>
+          <span class="topbar__sep"></span>
+          <div class="topbar__social">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-header__main">
+      <div class="site-header__bar">
+        <a href="index.html" class="brand" aria-label="Tatra Running — strona główna"><img class="brand__logo" src="assets/logo.webp" alt="Tatra Running" /></a>
+        <nav class="nav-primary" aria-label="Główna nawigacja">
+          <a href="obozy.html" class="nav-link">Obozy biegowe</a>
+          <a href="obozy.html" class="nav-link">Skitour</a>
+          <a href="obozy.html" class="nav-link">Kids</a>
+          <a href="obozy.html" class="nav-link">Junior</a>
+        </nav>
+        <div class="header-utils">
+          <a href="bony.html" class="btn btn--ghost btn--sm bony-btn" style="gap:8px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Bony
+          </a>
+          <a href="tel:+48500152300" class="phone-btn" aria-label="Zadzwoń +48 500 152 300">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>
+          </a>
+          <div class="acct">
+            <a href="kontakt.html" class="acct-btn" aria-label="Konto">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+            </a>
+          </div>
+          <a href="koszyk.html" class="cart-btn" aria-label="Koszyk, 0 pozycji">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg>
+          </a>
+          <a href="#mobile-menu" class="burger" aria-label="Otwórz menu" aria-controls="mobile-menu" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mm-overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <div class="mm-top">
+        <a href="index.html" class="brand"><img class="brand__logo" src="assets/logo.webp" alt="Tatra Running" /></a>
+        <button class="burger" style="display:grid" aria-label="Zamknij menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg>
+        </button>
+      </div>
+      <div class="mm-body">
+        <nav class="mm-list" aria-label="Menu mobilne">
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Obozy biegowe</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Skitour</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kids</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Junior</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="zespol.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Zespół</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="partnerzy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Partnerzy</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="dokumenty.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Pomoc</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="blog.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Blog</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="kontakt.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kontakt</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="bony.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg>Bony</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+        </nav>
+        <div class="mm-social">
+          <a class="social-btn" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+          <a class="social-btn" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+          <a class="social-btn" href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+        </div>
+      </div>
+      <div class="mm-foot">
+        <div class="mm-acct">
+          <a class="btn btn--ghost" href="kontakt.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> Zaloguj się
+          </a>
+          <a class="btn btn--ghost" href="kontakt.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="8" x2="20" y2="8" /><line x1="4" y1="16" x2="20" y2="16" /><circle cx="9" cy="8" r="2.4" fill="var(--paper)" /><circle cx="15" cy="16" r="2.4" fill="var(--paper)" /></svg> Ustawienia
+          </a>
+        </div>
+        <a class="btn btn--accent btn--block btn--lg" href="koszyk.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg> Koszyk
+        </a>
+        <p style="color:var(--muted);font-size:14px;margin-top:14px;display:flex;gap:8px;align-items:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg> +48 500 152 300 · contact@tatrarunning.pl
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__bg"><img src="assets/home-hero.webp" alt="Grupa biegaczy w górach z trenerami Tatra Running" /></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__inner">
+        <div class="wrap wrap--wide">
+          <div style="max-width:760px">
+            <div class="eyebrow hero__eyebrow">14. sezon w górach · 2026</div>
+            <h1 class="hero__title display">Tatra<br/>Running</h1>
+            <p class="hero__sub">Bieganie. Skitury. Obozy. Treningi.</p>
+            <div class="hero__cta">
+              <a href="obozy.html" class="btn btn--accent btn--lg">Zobacz obozy 2026 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></a>
+              <a href="bony.html" class="btn btn--ghost-dark btn--lg"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Podaruj bon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="wrap wrap--wide" style="position:relative;z-index:2;margin-top:-80px">
+      <div class="hero-stats">
+        <div class="hero-stats__cell">
+          <div class="hero-stats__num">14.</div>
+          <div class="hero-stats__lab">sezon wypraw</div>
+        </div>
+        <div class="hero-stats__cell">
+          <div class="hero-stats__num">500+</div>
+          <div class="hero-stats__lab">zadowolonych uczestników</div>
+        </div>
+        <div class="hero-stats__cell">
+          <div class="hero-stats__num">3</div>
+          <div class="hero-stats__lab">kontynenty obozów</div>
+        </div>
+        <div class="hero-stats__cell">
+          <div class="hero-stats__num">max 14</div>
+          <div class="hero-stats__lab">osób w kameralnej grupie</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAJBLIŻSZE OBOZY -->
+    <section class="section">
+      <div class="wrap wrap--wide">
+        <div class="reveal row-between">
+          <div class="sec-head">
+            <div class="eyebrow">Najbliższe obozy</div>
+            <h2>Wyjazdy skiturowe i obozy biegowe na 2026</h2>
+            <p>Już czternasty rok z kolei zapraszamy Was na wyjazdy skiturowe i obozy biegowe! Tatry, Kaukaz, Pireneje, Alpy, a może Maroko czy góry Rumunii.</p>
+          </div>
+          <a href="obozy.html" class="btn btn--ghost" style="flex:0 0 auto">Wszystkie obozy <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></a>
+        </div>
+        <div class="reveal camp-grid" style="margin-top:48px">
+          <!-- CampCard: tien-shan-2026 (status few, spotsLeft 3) -->
+          <a href="oboz.html" class="camp-card">
+            <div class="camp-card__media">
+              <div style="position:relative;overflow:hidden;aspect-ratio:4/3"><img src="assets/team-2.webp" alt="Tien-Shan Run&amp;Hike Adventure" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block" loading="lazy" /></div>
+              <div class="camp-card__top">
+                <span class="camp-card__type">Adventure</span>
+                <span class="badge badge--few"><span class="dot"></span> Ostatnie 3 miejsca</span>
+              </div>
+            </div>
+            <div class="camp-card__body">
+              <div class="camp-card__price">6 999 zł</div>
+              <h3 class="camp-card__title">Tien-Shan Run&amp;Hike Adventure 2026</h3>
+              <p class="camp-card__lead">Biegowo-trekkingowa eskapada w góry Kirgistanu — połączenie zwiedzania i odkrywania przyrody niezwykłego kraju.</p>
+              <div class="camp-meta">
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg> Kirgistan</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="8" y1="3" x2="8" y2="6" /><line x1="16" y1="3" x2="16" y2="6" /></svg> 10.07 – 19.07.2026</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 6" /><polyline points="15 6 21 6 21 12" /></svg> Adventure · 10 dni</div>
+              </div>
+              <div class="camp-card__cta">
+                <span class="camp-card__link">Zobacz obóz <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></span>
+              </div>
+            </div>
+          </a>
+          <!-- CampCard: armenia-2026 (status open, spotsLeft 9) -->
+          <a href="oboz.html" class="camp-card">
+            <div class="camp-card__media">
+              <div style="position:relative;overflow:hidden;aspect-ratio:4/3"><img src="assets/team-eko.webp" alt="Armenia Run&amp;Hike Adventure" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block" loading="lazy" /></div>
+              <div class="camp-card__top">
+                <span class="camp-card__type">Adventure</span>
+                <span class="badge badge--open"><span class="dot"></span> Wolne miejsca</span>
+              </div>
+            </div>
+            <div class="camp-card__body">
+              <div class="camp-card__price">4 999 zł</div>
+              <h3 class="camp-card__title">Armenia Run&amp;Hike Adventure 2026</h3>
+              <p class="camp-card__lead">Klasztory wykute w skale, dzikie wąwozy i biegowe szlaki Kaukazu Południowego.</p>
+              <div class="camp-meta">
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg> Armenia</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="8" y1="3" x2="8" y2="6" /><line x1="16" y1="3" x2="16" y2="6" /></svg> 05.09 – 12.09.2026</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 6" /><polyline points="15 6 21 6 21 12" /></svg> Adventure · 8 dni</div>
+              </div>
+              <div class="camp-card__cta">
+                <span class="camp-card__link">Zobacz obóz <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></span>
+              </div>
+            </div>
+          </a>
+          <!-- CampCard: cappadocia-2026 (status open, spotsLeft 11) -->
+          <a href="oboz.html" class="camp-card">
+            <div class="camp-card__media">
+              <div style="position:relative;overflow:hidden;aspect-ratio:4/3"><img src="assets/home-hero.webp" alt="Cappadocia Running Adventure" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block" loading="lazy" /></div>
+              <div class="camp-card__top">
+                <span class="camp-card__type">Adventure</span>
+                <span class="badge badge--open"><span class="dot"></span> Wolne miejsca</span>
+              </div>
+            </div>
+            <div class="camp-card__body">
+              <div class="camp-card__price">5 999 zł</div>
+              <h3 class="camp-card__title">Cappadocia Running Adventure 2026</h3>
+              <p class="camp-card__lead">Bieganie wśród księżycowych formacji skalnych i balonów o świcie.</p>
+              <div class="camp-meta">
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg> Turcja</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="8" y1="3" x2="8" y2="6" /><line x1="16" y1="3" x2="16" y2="6" /></svg> 11.10 – 18.10.2026</div>
+                <div class="camp-meta__row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 6" /><polyline points="15 6 21 6 21 12" /></svg> Adventure · 8 dni</div>
+              </div>
+              <div class="camp-card__cta">
+                <span class="camp-card__link">Zobacz obóz <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM TEASER -->
+    <section class="section" style="padding-top:0">
+      <div class="wrap wrap--wide">
+        <div class="reveal split">
+          <div class="split__media"><div style="position:relative;overflow:hidden;aspect-ratio:5/4"><img src="assets/team-1.webp" alt="Zespół Tatra Running" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block" loading="lazy" /></div></div>
+          <div>
+            <div class="sec-head">
+              <div class="eyebrow">O nas</div>
+              <h2>Instruktorzy biegania po górach</h2>
+              <p>Na co dzień jesteśmy czynnymi instruktorami biegania w Tatrach, którzy połączyli pasje, wiedzę i wieloletnie doświadczenie, aby pomóc podopiecznym osiągać maksimum możliwości sportowych i górskich. Ponad dziesięć lat doświadczenia w organizacji obozów biegowych i skiturowych.</p>
+            </div>
+            <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+              <a href="zespol.html" class="btn btn--ink">Poznaj zespół <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></a>
+              <a href="obozy.html" class="btn btn--ghost">Oferta obozów</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DARK VALUE BAND -->
+    <section class="section band-dark">
+      <div class="wrap wrap--wide">
+        <div class="reveal">
+          <div class="sec-head">
+            <div class="eyebrow">Dlaczego Tatra Running</div>
+            <h2 style="color:#fff">Wyczynowi zawodnicy. Kameralne grupy. Prawdziwe góry.</h2>
+            <p style="color:var(--on-dark-mut)">Nasze obozy prowadzą zawodnicy z wieloletnim stażem i medalami — w biegach długich, ultra, górskich, triathlonie i skialpinizmie.</p>
+          </div>
+        </div>
+        <div class="reveal values">
+          <div class="value">
+            <div class="value__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0 1 12 0" /><path d="M16 6a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.7" /></svg></div>
+            <h3>Kameralne grupy</h3>
+            <p>Pracujemy z grupą maks. kilkunastu uczestników, by dawać maksimum zindywidualizowanych wskazówek.</p>
+          </div>
+          <div class="value">
+            <div class="value__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8L3.5 9.2l5.9-.9L12 3Z" /></svg></div>
+            <h3>Mistrzowska kadra</h3>
+            <p>Mistrzowie świata i Europy, medaliści MP. Praktyczne doświadczenie i umiejętność dzielenia się wiedzą.</p>
+          </div>
+          <div class="value">
+            <div class="value__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19s-1-9 7-12c4-1.5 7-1 7-1s.5 3-1 7c-3 8-12 6-12 6Z" /><path d="M5 19c4-6 8-8 11-9" /></svg></div>
+            <h3>Edukacja ekologiczna</h3>
+            <p>Warsztaty ekologiczne prowadzone przez pracowników naukowych Tatrzańskiego Parku Narodowego.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOUCHER PROMO -->
+    <section class="section">
+      <div class="wrap wrap--wide">
+        <div class="reveal promo">
+          <div class="promo__grid">
+            <div class="promo__text">
+              <div class="eyebrow">Bony podarunkowe</div>
+              <h2 style="margin-top:14px">Podaruj górską przygodę</h2>
+              <p>Spraw prezent znajomym, bliskim, najbliższym — jeszcze niebiegającym albo już biegającym z nami. Wybierz kwotę, spersonalizuj dedykację i wyślij bon w kilka minut.</p>
+              <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+                <a href="bony.html" class="btn btn--accent btn--lg">Kup bon <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg></a>
+              </div>
+            </div>
+            <div class="promo__media">
+              <div class="vchip" style="padding:28px">
+                <!-- VoucherArt theme="warm" amount={500} recipient="Zosi" -->
+                <div class="voucher voucher--cqw" style="--vc:#F65824;width:100%;max-width:380px;transform:rotate(-3deg)">
+                  <div class="voucher__bg"><img src="assets/home-hero.webp" alt="" /></div>
+                  <div class="voucher__shade"></div>
+                  <div class="voucher__inner">
+                    <div class="voucher__top">
+                      <span class="logo-tile"><img src="assets/logo.webp" alt="Tatra Running" /></span>
+                      <span class="voucher__kicker">Bon<br/>podarunkowy</span>
+                    </div>
+                    <div>
+                      <div class="voucher__ded">Dla Zosi</div>
+                      <div class="voucher__amt" style="color:#fff">500<small>PLN</small></div>
+                      <div class="voucher__brand">Obozy · Treningi · Skitury</div>
+                    </div>
+                  </div>
+                  <div class="voucher__stripe"><i></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (kopia inline; KANONICZNE ŹRÓDŁO: partials/footer.html) ===== -->
+  <footer class="site-footer">
+    <div class="wrap wrap--wide">
+      <div class="footer-news">
+        <div class="footer-news__text">
+          <div class="eyebrow">Newsletter</div>
+          <h3>Nie przegap kolejnej wyprawy</h3>
+          <p>Nowe obozy, wolne miejsca i historie z gór — prosto na Twój e-mail. Bez spamu, kilka razy w sezonie.</p>
+        </div>
+        <div class="footer-news__signup">
+          <form class="footer-news__form">
+            <input type="email" placeholder="Twój e-mail" aria-label="E-mail do newslettera" required />
+            <button class="btn btn--accent" type="submit">
+              Zapisz się <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg>
+            </button>
+          </form>
+          <p class="footer-news__legal">
+            Przeczytaj nasze <a href="zasady-newslettera.html">zasady wysyłki</a> newslettera oraz o tym <a href="prywatnosc.html">jak przetwarzamy</a> Twoje dane.
+          </p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo-frame">
+            <span class="logo-tile logo-tile--card">
+              <img src="assets/logo.webp" alt="Tatra Running" />
+              <span class="logo-tile__tagline">Bieganie. Skitury. Obozy. Treningi. Czternasty rok wypraw biegowych i skiturowych w góry świata.</span>
+            </span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Wyprawy</h4>
+          <a href="obozy.html">Wszystkie obozy</a>
+          <a href="obozy.html">Obozy biegowe</a>
+          <a href="obozy.html">Obozy skiturowe</a>
+          <a href="obozy.html">Kids</a>
+          <a href="obozy.html">Junior</a>
+          <a href="bony.html">Bony podarunkowe</a>
+        </div>
+        <div class="footer-col">
+          <h4>Tatra Running</h4>
+          <a href="zespol.html">Zespół</a>
+          <a href="partnerzy.html">Partnerzy</a>
+          <a href="blog.html">Blog</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h4>Pomoc</h4>
+          <a href="dokumenty.html">Dokumenty prawne</a>
+          <a href="regulamin.html">Regulamin sklepu</a>
+          <a href="zasady-newslettera.html">Zasady newslettera</a>
+          <a href="prywatnosc.html">Przetwarzanie danych</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <a href="tel:+48500152300">+48 500 152 300</a>
+          <a href="mailto:contact@tatrarunning.pl">contact@tatrarunning.pl</a>
+          <p style="color:var(--on-dark-mut);font-size:14px;margin-top:12px">
+            Organizator turystyki wpisany do Rejestru Organizatorów Turystyki Marszałka Województwa Małopolskiego.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap wrap--wide">
+      <div class="footer-bottom">
+        <span>© 2026 Tatra Running</span>
+        <div class="footer-social">
+          <a class="social-btn" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+          <a class="social-btn" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+          <a class="social-btn" href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
