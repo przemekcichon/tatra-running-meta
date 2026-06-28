@@ -18,6 +18,23 @@ Pracujemy w **multiroot workspace**. Foldery (część dodawana stopniowo):
 
 **Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
 
+### Dostęp do żywej instancji WordPressa (`@localwp`)
+
+Strona dev działa w **Local (LocalWP)**: **Tatra Running New** (slug `tatra-running-new`, status *running*), katalog `~\Local Sites\tatra-running-new\app\public` (= root WP tego workspace).
+
+Do **odczytu** stanu żywego WP służy narzędzie **`@localwp`** (read-only — surowe SQL są tylko do odczytu). Komendy slash:
+
+| Komenda | Działanie |
+|---|---|
+| `@localwp /sites` | lista wszystkich stron Local + status (running/stopped) |
+| `@localwp /plugins` | aktywne wtyczki (szybko — prosto z DB) |
+| `@localwp /options siteurl` | opcje pasujące do wzorca (`wp_options`) |
+| `@localwp /db SELECT ...` | surowe zapytanie SQL **tylko do odczytu** |
+
+Działa też **język naturalny**, np. `@localwp What plugins are active?`, `@localwp What is the siteurl?`, `@localwp List all users`, `@localwp What WordPress version is running?`, `@localwp Show me all transients matching _site_transient_%`. Inną stronę wskazuje flaga `--site=`, np. `@localwp --site=tatra-running-new What theme is active?`.
+
+**Kiedy używać:** weryfikacja realnego stanu (aktywne wtyczki, wersja WP/Woo, opcje, slugi/permalinki, dane CPT/ACF) zamiast zgadywania. **`@localwp` jest źródłem prawdy o stanie żywego WP** — komplementarnym do ground-truth z kodu na dysku. **Nie** używać do modyfikacji danych (nawet jeśli SQL by na to pozwalał — kontrakt narzędzia jest read-only).
+
 ## Architektura: vertical slice
 
 Motyw i obie wtyczki własne budujemy w **architekturze vertical slice**:

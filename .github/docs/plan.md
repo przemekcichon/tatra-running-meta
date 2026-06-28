@@ -6,6 +6,7 @@
 - ~3500 linii, ~35 komponentów. Czysty CSS z tokenami (`styles.css` base + `app.css` komponenty).
 - Pliki: `index.html`, `data.jsx`, `ui.jsx`, `router.jsx`, `blocks.jsx`, `chrome.jsx`, `account.jsx`, `pages-*.jsx` (home/camp/shop/blog/team/legal/misc), `app.jsx`.
 - Assets: `assets/*.webp` (logo, hero, team, trenerzy). `uploads/teksty-do-strony.md`.
+- **Środowisko WP dev:** Local (LocalWP), strona **Tatra Running New** (slug `tatra-running-new`), root `~\Local Sites\tatra-running-new\app\public`. Stan żywego WP odczytujemy narzędziem **`@localwp`** (read-only) — zob. [`copilot-instructions.md`](../copilot-instructions.md) → „Dostęp do żywej instancji WordPressa".
 
 ## Decyzje (ustalone z klientem)
 
@@ -160,6 +161,7 @@ Na produkcie (kat. `obozy`), poza natywnymi polami Woo (cena, stan magazynowy = 
 ## Weryfikacja
 
 - Serwowanie lokalne, przeklikanie każdej strony, brak błędów w konsoli.
+- Stan żywego WP (po migracji slice'ów na WP) weryfikujemy przez **`@localwp`** (read-only) zamiast zgadywania: aktywne wtyczki, wersja WP/Woo, opcje, slugi/permalinki, dane CPT/ACF.
 - RWD (mobile menu, header scroll-hide), Lighthouse (a11y/perf).
 - Klaro: baner zgody, zapamiętanie wyboru, bramkowanie embedów działa; synchronizacja z panelem Aury.
 - Aura: orb przechodzi przez 4 stany, panel steruje integracjami, opt-out (Unmeasured) nie tworzy ID; analityka — GA4 #1 sandbox przed zgodą (dobowe cookie), GA4 #2 po zgodzie.
