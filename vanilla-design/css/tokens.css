@@ -1,0 +1,54 @@
+/* ============================================================
+   TATRA RUNNING — design tokens
+   CSS custom properties only. Load first (before base/components/pages).
+   Source: react-design/styles.css (:root) + react-design/app.css (responsive :root override).
+   ============================================================ */
+
+:root {
+  /* Brand palette (confirmed by client) */
+  --bg:        #f4f6f0;   /* body background, warm off-white */
+  --paper:     #ffffff;   /* cards / surfaces */
+  --ink:       #000000;   /* headings */
+  --body:      #333333;   /* body copy */
+  --muted:     #7d7d7d;   /* secondary text */
+  --accent:    #F65824;   /* price / key CTA accent */
+  --accent-ink:#d8410f;   /* darker accent for text on light */
+  --green:     #6f9b3f;   /* logo green, used very sparingly */
+
+  /* Dark cinematic sections */
+  --dark:      #14130f;
+  --dark-2:    #1d1b16;
+  --on-dark:   #f4f6f0;
+  --on-dark-mut:#a7a59c;
+
+  /* Lines & shadows */
+  --line:      #e3e4dd;
+  --line-2:    #d5d6cd;
+  --line-dark: rgba(255,255,255,.14);
+  --shadow-sm: 0 1px 2px rgba(20,19,15,.05);
+  --shadow:    0 12px 30px -12px rgba(20,19,15,.18);
+  --shadow-lg: 0 40px 80px -32px rgba(20,19,15,.45);
+
+  /* Radii */
+  --r-sm: 6px;
+  --r:    12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Type */
+  --display: 'Archivo', system-ui, sans-serif;
+  --sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --script:  'Caveat', cursive;
+
+  /* Layout */
+  --maxw: 1240px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --header-h: 105px;
+  --topbar-h: 42px;
+  --sticky-top: calc(105px + 42px + 16px);
+}
+
+/* Responsive token override (compact header below 900px) */
+@media (max-width: 900px) {
+  :root { --header-h: 76px; --sticky-top: calc(76px + 12px); }
+}

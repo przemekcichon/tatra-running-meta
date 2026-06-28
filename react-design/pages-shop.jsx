@@ -104,7 +104,7 @@ function BonyPage() {
               {/* delivery */}
               <div className="cfg-step">
                 <div className="cfg-step__label"><span className="cfg-step__num">4</span> Forma bonu</div>
-                <div className="seg">
+                <div className="cfg-seg">
                   <button className={delivery === 'digital' ? 'sel' : ''} onClick={() => setDelivery('digital')}>Cyfrowy (PDF)</button>
                   <button className={delivery === 'physical' ? 'sel' : ''} onClick={() => setDelivery('physical')}>Fizyczny (karta)</button>
                 </div>

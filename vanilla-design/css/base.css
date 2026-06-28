@@ -1,0 +1,83 @@
+/* ============================================================
+   TATRA RUNNING — base
+   Reset, base element styles, global typographic & layout utilities.
+   Load after tokens.css, before components.css.
+   Source: react-design/styles.css (everything except the UI primitives,
+   which live in components.css).
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  color: var(--ink);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ---------- Type scale ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+}
+.eyebrow {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.eyebrow--mut { color: var(--muted); }
+.lead { font-size: clamp(18px, 2vw, 21px); color: var(--body); line-height: 1.55; }
+
+/* ---------- Layout helpers ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+.wrap--wide { max-width: 1440px; }
+.section { padding-block: clamp(56px, 9vw, 120px); }
+.stack > * + * { margin-top: 1rem; }
+
+/* ---------- Misc ---------- */
+.hairline { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.fade-in { animation: fade .5s ease both; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Striped placeholder for missing imagery */
+.ph {
+  background-color: #e7e8e0;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.04) 0 12px, transparent 12px 24px);
+  display: flex; align-items: center; justify-content: center;
+  color: #9a9b90; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: .04em;
+  text-align: center; padding: 16px;
+}
+
+/* Scrollbar tidy for horizontal rails */
+.no-bar::-webkit-scrollbar { display: none; }
+.no-bar { scrollbar-width: none; }
+
+/* Focus visibility */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
