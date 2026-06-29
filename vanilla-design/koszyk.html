@@ -47,8 +47,8 @@
         <nav class="nav-primary" aria-label="Główna nawigacja">
           <a href="obozy.html" class="nav-link">Obozy biegowe</a>
           <a href="obozy.html" class="nav-link">Skitour</a>
-          <a href="obozy.html" class="nav-link">Kids</a>
-          <a href="obozy.html" class="nav-link">Junior</a>
+          <a href="obozy-kids.html" class="nav-link">Kids</a>
+          <a href="obozy-junior.html" class="nav-link">Junior</a>
         </nav>
         <div class="header-utils">
           <a href="bony.html" class="btn btn--ghost btn--sm bony-btn" style="gap:8px">
@@ -82,8 +82,8 @@
         <nav class="mm-list" aria-label="Menu mobilne">
           <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Obozy biegowe</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
           <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Skitour</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
-          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kids</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
-          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Junior</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy-kids.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kids</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy-junior.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Junior</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
           <a href="zespol.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Zespół</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
           <a href="partnerzy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Partnerzy</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
           <a href="dokumenty.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Pomoc</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
@@ -118,19 +118,24 @@
 
   <!-- ===== MAIN: koszyk (drawer pusty 1:1; logika koszyka = Faza 3) ===== -->
   <main>
-    <div class="wrap">
-      <div class="success">
-        <div class="drawer__empty" style="padding:60px 0">
-          <div class="ic" style="margin:0 auto 18px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg></div>
+    <div class="drawer-scrim"></div>
+    <aside class="drawer" role="dialog" aria-label="Koszyk">
+      <div class="drawer__head">
+        <h3>Koszyk</h3>
+        <a href="index.html" class="drawer__close" aria-label="Zamknij koszyk"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg></a>
+      </div>
+      <div class="drawer__body">
+        <div class="drawer__empty">
+          <div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg></div>
           <p style="font-weight:700;color:var(--ink);margin-bottom:6px">Twój koszyk jest pusty</p>
           <p style="font-size:14px">Dodaj obóz lub bon podarunkowy, by kontynuować.</p>
-          <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
-            <a href="obozy.html" class="btn btn--ink">Przeglądaj obozy</a>
-            <a href="bony.html" class="btn btn--ghost"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Kup bon</a>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
+            <a href="obozy.html" class="btn btn--ink btn--block">Przeglądaj obozy</a>
+            <a href="bony.html" class="btn btn--ghost btn--block"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Kup bon</a>
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   </main>
 
   <!-- ===== FOOTER (kopia inline; KANONICZNE ŹRÓDŁO: partials/footer.html) ===== -->
@@ -169,8 +174,8 @@
           <a href="obozy.html">Wszystkie obozy</a>
           <a href="obozy.html">Obozy biegowe</a>
           <a href="obozy.html">Obozy skiturowe</a>
-          <a href="obozy.html">Kids</a>
-          <a href="obozy.html">Junior</a>
+          <a href="obozy-kids.html">Kids</a>
+          <a href="obozy-junior.html">Junior</a>
           <a href="bony.html">Bony podarunkowe</a>
         </div>
         <div class="footer-col">
