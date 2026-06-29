@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kasa — Tatra Running</title>
+  <meta name="description" content="Finalizacja zamówienia Tatra Running — dane kontaktowe i metoda płatności. BLIK, Przelewy24, przelew tradycyjny." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <!-- ===== HEADER (kopia inline; KANONICZNE ŹRÓDŁO: partials/header.html) ===== -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="topbar__inner">
+        <div class="topbar__left">
+          <a class="topbar__item" href="tel:+48500152300"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg> +48 500 152 300</a>
+          <a class="topbar__item topbar__item--mail" href="mailto:contact@tatrarunning.pl"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><polyline points="3 7 12 13 21 7" /></svg> contact@tatrarunning.pl</a>
+          <span class="topbar__item topbar__item--hours"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18L14 7l-3.2 5.5L9 9.5 3 20Z" /></svg> 14. sezon w górach</span>
+        </div>
+        <div class="topbar__right">
+          <a href="zespol.html" class="topbar__link">Zespół</a>
+          <a href="partnerzy.html" class="topbar__link">Partnerzy</a>
+          <a href="dokumenty.html" class="topbar__link">Pomoc</a>
+          <span class="topbar__divider" aria-hidden="true"></span>
+          <a href="blog.html" class="topbar__link">Blog</a>
+          <a href="kontakt.html" class="topbar__link">Kontakt</a>
+          <span class="topbar__sep"></span>
+          <div class="topbar__social">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-header__main">
+      <div class="site-header__bar">
+        <a href="index.html" class="brand" aria-label="Tatra Running — strona główna"><img class="brand__logo" src="assets/logo.webp" alt="Tatra Running" /></a>
+        <nav class="nav-primary" aria-label="Główna nawigacja">
+          <a href="obozy.html" class="nav-link">Obozy biegowe</a>
+          <a href="obozy.html" class="nav-link">Skitour</a>
+          <a href="obozy.html" class="nav-link">Kids</a>
+          <a href="obozy.html" class="nav-link">Junior</a>
+        </nav>
+        <div class="header-utils">
+          <a href="bony.html" class="btn btn--ghost btn--sm bony-btn" style="gap:8px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Bony
+          </a>
+          <a href="tel:+48500152300" class="phone-btn" aria-label="Zadzwoń +48 500 152 300">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>
+          </a>
+          <div class="acct">
+            <a href="kontakt.html" class="acct-btn" aria-label="Konto">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+            </a>
+          </div>
+          <a href="koszyk.html" class="cart-btn" aria-label="Koszyk, 0 pozycji">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg>
+          </a>
+          <a href="#mobile-menu" class="burger" aria-label="Otwórz menu" aria-controls="mobile-menu" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mm-overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <div class="mm-top">
+        <a href="index.html" class="brand"><img class="brand__logo" src="assets/logo.webp" alt="Tatra Running" /></a>
+        <button class="burger" style="display:grid" aria-label="Zamknij menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg>
+        </button>
+      </div>
+      <div class="mm-body">
+        <nav class="mm-list" aria-label="Menu mobilne">
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Obozy biegowe</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Skitour</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kids</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="obozy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Junior</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="zespol.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Zespół</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="partnerzy.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Partnerzy</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="dokumenty.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Pomoc</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="blog.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Blog</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="kontakt.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px">Kontakt</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+          <a href="bony.html" class="mm-item"><span style="display:inline-flex;align-items:center;gap:14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg>Bony</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" /></svg></a>
+        </nav>
+        <div class="mm-social">
+          <a class="social-btn" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+          <a class="social-btn" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+          <a class="social-btn" href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+        </div>
+      </div>
+      <div class="mm-foot">
+        <div class="mm-acct">
+          <a class="btn btn--ghost" href="kontakt.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> Zaloguj się
+          </a>
+          <a class="btn btn--ghost" href="kontakt.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="8" x2="20" y2="8" /><line x1="4" y1="16" x2="20" y2="16" /><circle cx="9" cy="8" r="2.4" fill="var(--paper)" /><circle cx="15" cy="16" r="2.4" fill="var(--paper)" /></svg> Ustawienia
+          </a>
+        </div>
+        <a class="btn btn--accent btn--block btn--lg" href="koszyk.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg> Koszyk
+        </a>
+        <p style="color:var(--muted);font-size:14px;margin-top:14px;display:flex;gap:8px;align-items:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a12 12 0 0 0 5 5L18 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg> +48 500 152 300 · contact@tatrarunning.pl
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN: kasa — stan pusty (cart.items.length === 0); pełen checkout = Faza 3/Woo) ===== -->
+  <main>
+    <div class="wrap">
+      <div class="success">
+        <div class="drawer__empty" style="padding:60px 0">
+          <div class="ic" style="margin:0 auto 18px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg></div>
+          <h1 style="font-size:32px">Koszyk jest pusty</h1>
+          <p style="margin-top:12px">Dodaj obóz lub bon, aby przejść do kasy.</p>
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+            <a href="obozy.html" class="btn btn--ink">Przeglądaj obozy</a>
+            <a href="bony.html" class="btn btn--ghost"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Kup bon</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (kopia inline; KANONICZNE ŹRÓDŁO: partials/footer.html) ===== -->
+  <footer class="site-footer">
+    <div class="wrap wrap--wide">
+      <div class="footer-news">
+        <div class="footer-news__text">
+          <div class="eyebrow">Newsletter</div>
+          <h3>Nie przegap kolejnej wyprawy</h3>
+          <p>Nowe obozy, wolne miejsca i historie z gór — prosto na Twój e-mail. Bez spamu, kilka razy w sezonie.</p>
+        </div>
+        <div class="footer-news__signup">
+          <form class="footer-news__form">
+            <input type="email" placeholder="Twój e-mail" aria-label="E-mail do newslettera" required />
+            <button class="btn btn--accent" type="submit">
+              Zapisz się <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12" /><polyline points="14 6 20 12 14 18" /></svg>
+            </button>
+          </form>
+          <p class="footer-news__legal">
+            Przeczytaj nasze <a href="zasady-newslettera.html">zasady wysyłki</a> newslettera oraz o tym <a href="prywatnosc.html">jak przetwarzamy</a> Twoje dane.
+          </p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo-frame">
+            <span class="logo-tile logo-tile--card">
+              <img src="assets/logo.webp" alt="Tatra Running" />
+              <span class="logo-tile__tagline">Bieganie. Skitury. Obozy. Treningi. Czternasty rok wypraw biegowych i skiturowych w góry świata.</span>
+            </span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Wyprawy</h4>
+          <a href="obozy.html">Wszystkie obozy</a>
+          <a href="obozy.html">Obozy biegowe</a>
+          <a href="obozy.html">Obozy skiturowe</a>
+          <a href="obozy.html">Kids</a>
+          <a href="obozy.html">Junior</a>
+          <a href="bony.html">Bony podarunkowe</a>
+        </div>
+        <div class="footer-col">
+          <h4>Tatra Running</h4>
+          <a href="zespol.html">Zespół</a>
+          <a href="partnerzy.html">Partnerzy</a>
+          <a href="blog.html">Blog</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h4>Pomoc</h4>
+          <a href="dokumenty.html">Dokumenty prawne</a>
+          <a href="regulamin.html">Regulamin sklepu</a>
+          <a href="zasady-newslettera.html">Zasady newslettera</a>
+          <a href="prywatnosc.html">Przetwarzanie danych</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <a href="tel:+48500152300">+48 500 152 300</a>
+          <a href="mailto:contact@tatrarunning.pl">contact@tatrarunning.pl</a>
+          <p style="color:var(--on-dark-mut);font-size:14px;margin-top:12px">
+            Organizator turystyki wpisany do Rejestru Organizatorów Turystyki Marszałka Województwa Małopolskiego.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap wrap--wide">
+      <div class="footer-bottom">
+        <span>© 2026 Tatra Running</span>
+        <div class="footer-social">
+          <a class="social-btn" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8V14h2.7v8h3Z" /></svg></a>
+          <a class="social-btn" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+          <a class="social-btn" href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3.5" /><path d="M11 9.5l4 2.5-4 2.5Z" fill="currentColor" stroke="none" /></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
