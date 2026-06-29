@@ -130,7 +130,8 @@
   /* ---------- 4 zintegrowane usługi (panel + trust) ---------- */
   function suspendedCount() {
     var c = consents();
-    var toggles = [c['ga4-analytics'], c['youtube'], c['osm'], c['gravity-forms']];
+    // 4 integracje mierzone (aura.md §3.3): YouTube, mapa, WhatsApp, formularz
+    var toggles = [c['youtube'], c['osm'], c['whatsapp'], c['gravity-forms']];
     return toggles.filter(function (v) { return !v; }).length;
   }
 
@@ -199,7 +200,19 @@
     });
   }
 
-  function applyPreset(id) { var p = readPrefs(); Object.assign(p, PRESETS[id]); writePrefs(p); refresh(); }
+  function applyPreset(id) {
+    var p = readPrefs();
+    var preset = PRESETS[id];
+    Object.assign(p, preset);
+    writePrefs(p);
+    // mapuj presenty na zgody Klaro (aura.md §3.1: preset ustavia od razu wszystkie przełączniki integracji)
+    if (window.TRKlaro) {
+      TRKlaro.setConsent('youtube', preset.youtube === 'auto');
+      TRKlaro.setConsent('osm', preset.maps === 'osm');
+      TRKlaro.setConsent('whatsapp', preset.contactChannel === 'whatsapp');
+    }
+    refresh();
+  }
   function regenIdentity() {
     var n = Math.floor(Math.random() * 1e9);
     try { (getState() === 'ephemeral') ? localStorage.setItem(DAY_KEY, JSON.stringify({ d: today(), seed: n })) : localStorage.setItem(SEED_KEY, String(n)); } catch (e) {}

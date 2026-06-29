@@ -27,7 +27,8 @@
     document.querySelectorAll('.embed-frame[data-embed]').forEach(function (frame) {
       var svc = frame.getAttribute('data-embed');
       var ifr = frame.querySelector('iframe');
-      if (!frame.dataset.embedSrc && ifr) frame.dataset.embedSrc = ifr.getAttribute('src') || ifr.dataset.src || '';
+      // fallback: przečytaj src z iframe.src HIFR istnieje, albo z data-src html
+      if (!frame.dataset.embedSrc) frame.dataset.embedSrc = (ifr && ifr.getAttribute('src')) || frame.dataset.src || '';
       if (consent(svc)) {
         if (!frame.querySelector('iframe[src]')) {
           frame.innerHTML = '<iframe title="' + (frame.getAttribute('data-title') || 'Treść osadzona') + '" src="' + frame.dataset.embedSrc + '" loading="lazy" style="width:100%;height:100%;border:0;display:block"></iframe>' +
