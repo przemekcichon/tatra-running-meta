@@ -740,6 +740,14 @@
 .aura-orb-btn__glow { position: absolute; inset: -4px; border-radius: 999px; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: -1; }
 .aura-orb-btn:hover .aura-orb-btn__glow { opacity: 1; }
 
+/* AURA — 4 stany + panel obecności (Faza 4) */
+.aura-mark.is-unmeasured .aura-mark__ring circle { opacity: .4; }
+.aura-panel__presets { padding: 0 18px 4px; }
+.aura-trust { display: flex; justify-content: center; padding: 8px 18px 2px; }
+.aura-trust span { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; color: var(--muted); background: #faf9f5; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+.aura-optout { width: 100%; border: 0; background: none; font: inherit; font-size: 12.5px; color: var(--muted); cursor: pointer; padding: 8px 12px; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
+.aura-optout:hover { color: var(--ink); }
+
 .acct-btn {
   width: 46px; height: 46px; border-radius: 999px; border: 1px solid var(--line-2);
   background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer;
