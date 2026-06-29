@@ -248,6 +248,7 @@
   /* ---------- modal "Ustawienia i prywatność" (panel zgód = jedyna kontrolka) ---------- */
   var modalEl = null;
   var modalEscFn = null;
+  var modalReturnFocusEl = null;
   function seg(name, val, opts) {
     return '<div class="seg" role="group">' + opts.map(function (o) {
       return '<button type="button" class="seg__btn ' + (val === o.v ? 'is-on' : '') + '" data-aura="seg" data-name="' + name + '" data-val="' + o.v + '">' + o.l + '</button>';
@@ -271,7 +272,12 @@
       '<div class="set-row"><div class="set-row__main"><div class="set-row__top"><div><div class="set-row__title">Pełna analityka (po zgodzie)</div></div>' + tgl('ga4-analytics', !!c['ga4-analytics']) + '</div></div></div></div></div>' +
       '<footer class="set-foot"><button class="set-reset" data-aura="reset">Przywróć domyślne</button><button class="btn btn--ink" data-aura="close">Gotowe</button></footer></div></div>';
   }
-  function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } if (modalEscFn) { document.removeEventListener('keydown', modalEscFn); modalEscFn = null; } }
+  function closeModal() {
+    if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; }
+    if (modalEscFn) { document.removeEventListener('keydown', modalEscFn); modalEscFn = null; }
+    if (modalReturnFocusEl && typeof modalReturnFocusEl.focus === 'function') { try { modalReturnFocusEl.focus(); } catch (e) {} }
+    modalReturnFocusEl = null;
+  }
   function authHTML(mode) {
     var isReg = mode === 'register';
     var logoEl = document.querySelector('.brand__logo');
@@ -290,9 +296,9 @@
       + '<h3>' + (isReg ? 'Załóż konto' : 'Zaloguj się') + '</h3>'
       + '<p>' + (isReg ? 'Szybciej rezerwuj obozy i miej swoje wyjazdy w jednym miejscu.' : 'Witaj z powrotem w górach.') + '</p>'
       + '</div>'
-      + '<div class="auth-tabs">'
-      + '<button class="' + (!isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="login">Logowanie</button>'
-      + '<button class="' + (isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="register">Rejestracja</button>'
+      + '<div class="auth-tabs" role="tablist" aria-label="Tryb logowania">'
+      + '<button type="button" class="' + (!isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="login" role="tab" aria-selected="' + (!isReg) + '" tabindex="' + (!isReg ? '0' : '-1') + '">Logowanie</button>'
+      + '<button type="button" class="' + (isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="register" role="tab" aria-selected="' + isReg + '" tabindex="' + (isReg ? '0' : '-1') + '">Rejestracja</button>'
       + '</div>'
       + '<form class="auth-form" data-aura="auth-form">'
       + nameField
@@ -306,11 +312,15 @@
       + '</div></div>';
   }
   function openLogin(mode) {
+    modalReturnFocusEl = document.querySelector('.acct .aura-orb-btn') || document.querySelector('.acct [data-aura="orb"]') || document.activeElement;
     closePanel(); closeModal();
     document.body.insertAdjacentHTML('beforeend', authHTML(mode || 'login'));
     modalEl = document.body.lastElementChild; document.body.style.overflow = 'hidden';
     modalEscFn = function (e) { if (e.key === 'Escape') closeModal(); };
     document.addEventListener('keydown', modalEscFn);
+    var focusEl = modalEl && modalEl.querySelector(mode === 'register' ? '#auth-name' : '#auth-email');
+    if (!focusEl) focusEl = modalEl && modalEl.querySelector('.modal__x');
+    if (focusEl && typeof focusEl.focus === 'function') { try { focusEl.focus(); } catch (e) {} }
   }
   function openSettings() {
     closePanel(); closeModal();
@@ -321,8 +331,8 @@
     var t = e.target.closest('[data-aura]'); if (!t) return;
     var k = t.getAttribute('data-aura');
     if (k === 'close' || k === 'scrim') { if (k === 'scrim' && e.target !== t) return; closeModal(); }
-        else if (k === 'auth-tab' || k === 'auth-switch') { var nm = t.getAttribute('data-mode'); closeModal(); openLogin(nm); }
-        else if (k === 'auth-forgot') { e.preventDefault(); }
+    else if (k === 'auth-tab' || k === 'auth-switch') { var nm = t.getAttribute('data-mode'); closeModal(); openLogin(nm); }
+    else if (k === 'auth-forgot') { e.preventDefault(); }
     else if (k === 'seg') { var p = readPrefs(); p[t.dataset.name] = t.dataset.val; writePrefs(p); var m = openSettings; closeModal(); m(); }
     else if (k === 'svc' && window.TRKlaro) { TRKlaro.setConsent(t.dataset.svc, t.getAttribute('aria-checked') !== 'true'); closeModal(); openSettings(); }
     else if (k === 'reset') { writePrefs(DEFAULT_PREFS); if (window.TRKlaro) TRKlaro.optOutAll(); closeModal(); openSettings(); }

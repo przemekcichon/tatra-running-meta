@@ -105,7 +105,7 @@ Przycisk losowania nowej tożsamości — widoczny tylko gdy niepowiązana i mie
 
 **Stopka — drabina identyfikacji** (akcja zależna od stanu, o jeden szczebel dalej):
 - *ephemeral* → **„Pozwól tej stronie mnie pamiętać”** (zgoda → trwałe cookie, wciąż bez imienia)
-- *recognised* → **„Powiąż moją tożsamość”** (→ konto)
+- *recognised* → **„Przejmij tę tożsamość”** (→ konto)
 - *linked* → **„Wyloguj — zostań rozpoznanym urządzeniem”** (znika tylko imię)
 - *Unmeasured* → **„Włącz pomiar z powrotem”** (→ ślad ulotny)
 
