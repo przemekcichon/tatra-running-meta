@@ -158,11 +158,12 @@
     }).join('');
     var ladder = {
       ephemeral: { act: 'remember', txt: 'Pozwól tej stronie mnie pamiętać' },
-      recognised: { act: 'link', txt: 'Powiąż moją tożsamość' },
+      recognised: { act: 'link', txt: 'Przejmij tę tożsamość' },
       linked: { act: 'logout', txt: 'Wyloguj — zostań rozpoznanym urządzeniem' },
       unmeasured: { act: 'remeasure', txt: 'Włącz pomiar z powrotem' }
     }[state];
-    var optout = (state !== 'unmeasured') ? '<button class="aura-optout" data-aura="optout">Wyłącz pomiar całkowicie →</button>' : '';
+    var loginSecBtn = (state === 'ephemeral' || state === 'recognised') ? '<button class="acct-item" data-aura="ladder" data-act="login_modal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Zaloguj się</button>' : '';
+    var optout = (state !== 'unmeasured') ? '<button class="aura-optout" data-aura="optout">Wyłącz pomiar całkowicie \u2192</button>' : '';
     return '' +
       '<div class="acct-pop aura-panel" role="menu">' +
       '<div class="acct-pop__head">' + markSVG(state, 46) +
@@ -173,6 +174,7 @@
       '<div class="acct-pop__body">' +
       '<button class="acct-item" data-aura="settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/><circle cx="9" cy="8" r="2.4"/><circle cx="15" cy="16" r="2.4"/></svg> Ustawienia i prywatność</button>' +
       '<button class="acct-item acct-item--primary" data-aura="ladder" data-act="' + ladder.act + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 9l6-6 6 6"/></svg> ' + ladder.txt + '</button>' +
+      loginSecBtn +
       optout + '</div></div>';
   }
 
@@ -220,7 +222,8 @@
   }
   function ladderUp(act) {
     if (act === 'remember' && window.TRKlaro) TRKlaro.setConsent('ga4-analytics', true);
-    else if (act === 'link') { openLogin(); return; }
+    else if (act === 'link') { openLogin('register'); return; }
+    else if (act === 'login_modal') { openLogin('login'); return; }
     else if (act === 'logout') { try { localStorage.removeItem(USER_KEY); } catch (e) {} }
     else if (act === 'remeasure') setUnmeasured(false);
     refresh();
@@ -244,6 +247,7 @@
 
   /* ---------- modal "Ustawienia i prywatność" (panel zgód = jedyna kontrolka) ---------- */
   var modalEl = null;
+  var modalEscFn = null;
   function seg(name, val, opts) {
     return '<div class="seg" role="group">' + opts.map(function (o) {
       return '<button type="button" class="seg__btn ' + (val === o.v ? 'is-on' : '') + '" data-aura="seg" data-name="' + name + '" data-val="' + o.v + '">' + o.l + '</button>';
@@ -267,25 +271,46 @@
       '<div class="set-row"><div class="set-row__main"><div class="set-row__top"><div><div class="set-row__title">Pełna analityka (po zgodzie)</div></div>' + tgl('ga4-analytics', !!c['ga4-analytics']) + '</div></div></div></div></div>' +
       '<footer class="set-foot"><button class="set-reset" data-aura="reset">Przywróć domyślne</button><button class="btn btn--ink" data-aura="close">Gotowe</button></footer></div></div>';
   }
-  function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } }
-  function loginHTML() {
-    return '<div class="modal-scrim" data-aura="scrim"><div class="modal modal--login" role="dialog" aria-modal="true" aria-label="Zaloguj się">' +
-      '<header class="set-head"><div><div class="eyebrow">Konto Tatra Running</div><h3>Zaloguj się</h3>' +
-      '<p>Połącz tę obecność ze swoim kontem, aby mieć dostęp do historii zamówień i obozów.</p></div>' +
-      '<button class="modal__x" data-aura="close" aria-label="Zamknij"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button></header>' +
-      '<div class="set-body"><div class="set-group"><div class="set-group__label">Twoje dane</div>' +
-      '<div class="set-row"><div class="set-row__main"><label class="set-row__title" for="aura-login-name">Imię</label>' +
-      '<input id="aura-login-name" class="input" type="text" placeholder="np. Anna" autocomplete="given-name" style="width:100%;margin-top:.25rem"></div></div>' +
-      '<div class="set-row"><div class="set-row__main"><label class="set-row__title" for="aura-login-email">E-mail</label>' +
-      '<input id="aura-login-email" class="input" type="email" placeholder="twoj@email.pl" autocomplete="email" style="width:100%;margin-top:.25rem"></div></div>' +
-      '</div></div>' +
-      '<footer class="set-foot"><button class="btn btn--ink" data-aura="login-submit">Połącz tożsamość</button></footer>' +
-      '</div></div>';
+  function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } if (modalEscFn) { document.removeEventListener('keydown', modalEscFn); modalEscFn = null; } }
+  function authHTML(mode) {
+    var isReg = mode === 'register';
+    var logoEl = document.querySelector('.brand__logo');
+    var logoSrc = logoEl ? logoEl.src : 'assets/logo.webp';
+    var closeX = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>';
+    var arrowR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    var shieldI = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+    var nameField = isReg ? '<label class="field"><span>Imię i nazwisko</span><input id="auth-name" class="cfg-input" type="text" placeholder="Jan Kowalski" autocomplete="given-name" required></label>' : '';
+    var forgotLnk = !isReg ? '<a class="auth-forgot" href="#" data-aura="auth-forgot">Nie pamiętasz hasła?</a>' : '';
+    var altMode = isReg ? 'login' : 'register';
+    return '<div class="modal-scrim" data-aura="scrim">'
+      + '<div class="modal modal--auth" role="dialog" aria-modal="true" aria-label="' + (isReg ? 'Rejestracja' : 'Logowanie') + '">'
+      + '<button class="modal__x" data-aura="close" aria-label="Zamknij">' + closeX + '</button>'
+      + '<div class="auth-head">'
+      + '<img class="auth-logo" src="' + escapeHtml(logoSrc) + '" alt="Tatra Running">'
+      + '<h3>' + (isReg ? 'Załóż konto' : 'Zaloguj się') + '</h3>'
+      + '<p>' + (isReg ? 'Szybciej rezerwuj obozy i miej swoje wyjazdy w jednym miejscu.' : 'Witaj z powrotem w górach.') + '</p>'
+      + '</div>'
+      + '<div class="auth-tabs">'
+      + '<button class="' + (!isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="login">Logowanie</button>'
+      + '<button class="' + (isReg ? 'is-on' : '') + '" data-aura="auth-tab" data-mode="register">Rejestracja</button>'
+      + '</div>'
+      + '<form class="auth-form" data-aura="auth-form">'
+      + nameField
+      + '<label class="field"><span>Adres e-mail</span><input id="auth-email" class="cfg-input" type="email" placeholder="jan@example.com" autocomplete="email" required></label>'
+      + '<label class="field"><span>Hasło</span><input id="auth-pass" class="cfg-input" type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" autocomplete="' + (isReg ? 'new-password' : 'current-password') + '" required minlength="4"></label>'
+      + forgotLnk
+      + '<button type="submit" class="btn btn--accent btn--block btn--lg" style="margin-top:6px">' + (isReg ? 'Utwórz konto' : 'Zaloguj się') + ' ' + arrowR + '</button>'
+      + '<p class="auth-alt">' + (isReg ? 'Masz już konto? ' : 'Nie masz konta? ') + '<button type="button" data-aura="auth-switch" data-mode="' + altMode + '">' + (isReg ? 'Zaloguj się' : 'Załóż je') + '</button></p>'
+      + '</form>'
+      + '<p class="auth-note">' + shieldI + ' Demonstracja interfejsu \u2014 dane nie są nigdzie wysyłane.</p>'
+      + '</div></div>';
   }
-  function openLogin() {
+  function openLogin(mode) {
     closePanel(); closeModal();
-    document.body.insertAdjacentHTML('beforeend', loginHTML());
+    document.body.insertAdjacentHTML('beforeend', authHTML(mode || 'login'));
     modalEl = document.body.lastElementChild; document.body.style.overflow = 'hidden';
+    modalEscFn = function (e) { if (e.key === 'Escape') closeModal(); };
+    document.addEventListener('keydown', modalEscFn);
   }
   function openSettings() {
     closePanel(); closeModal();
@@ -296,23 +321,28 @@
     var t = e.target.closest('[data-aura]'); if (!t) return;
     var k = t.getAttribute('data-aura');
     if (k === 'close' || k === 'scrim') { if (k === 'scrim' && e.target !== t) return; closeModal(); }
-    else if (k === 'login-submit') {
-      var nameEl = modalEl && modalEl.querySelector('#aura-login-name');
-      var emailEl = modalEl && modalEl.querySelector('#aura-login-email');
-      var n = (nameEl ? nameEl.value.trim() : '') || 'Gość';
-      var em = emailEl ? emailEl.value.trim() : '';
-      try { localStorage.setItem(USER_KEY, JSON.stringify({ name: n, email: em })); } catch (ex) {}
-      closeModal(); refresh();
-    }
+        else if (k === 'auth-tab' || k === 'auth-switch') { var nm = t.getAttribute('data-mode'); closeModal(); openLogin(nm); }
+        else if (k === 'auth-forgot') { e.preventDefault(); }
     else if (k === 'seg') { var p = readPrefs(); p[t.dataset.name] = t.dataset.val; writePrefs(p); var m = openSettings; closeModal(); m(); }
     else if (k === 'svc' && window.TRKlaro) { TRKlaro.setConsent(t.dataset.svc, t.getAttribute('aria-checked') !== 'true'); closeModal(); openSettings(); }
     else if (k === 'reset') { writePrefs(DEFAULT_PREFS); if (window.TRKlaro) TRKlaro.optOutAll(); closeModal(); openSettings(); }
   });
 
+  document.addEventListener('submit', function (e) {
+    if (!e.target.matches('[data-aura="auth-form"]')) return;
+    e.preventDefault();
+    var nameEl = e.target.querySelector('#auth-name');
+    var emailEl = e.target.querySelector('#auth-email');
+    var em = emailEl ? emailEl.value.trim() : '';
+    var n = (nameEl && nameEl.value.trim()) || em.split('@')[0] || 'Gość';
+    try { localStorage.setItem(USER_KEY, JSON.stringify({ name: n, email: em })); } catch (ex) {}
+    closeModal(); refresh();
+  });
+
   window.TRAura = {
     rng: rng, auraIdentity: auraIdentity, getState: getState, seedFor: seedFor,
     readPrefs: readPrefs, writePrefs: writePrefs, refresh: refresh, render: renderOrb,
-    suspendedCount: suspendedCount, openSettings: openSettings, PRESETS: PRESETS
+    suspendedCount: suspendedCount, openSettings: openSettings, openLogin: openLogin, PRESETS: PRESETS
   };
 
   document.addEventListener('DOMContentLoaded', renderOrb);
