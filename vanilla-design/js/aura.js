@@ -220,7 +220,7 @@
   }
   function ladderUp(act) {
     if (act === 'remember' && window.TRKlaro) TRKlaro.setConsent('ga4-analytics', true);
-    else if (act === 'link') { window.TRAura.openSettings(); return; }
+    else if (act === 'link') { openLogin(); return; }
     else if (act === 'logout') { try { localStorage.removeItem(USER_KEY); } catch (e) {} }
     else if (act === 'remeasure') setUnmeasured(false);
     refresh();
@@ -268,13 +268,26 @@
       '<footer class="set-foot"><button class="set-reset" data-aura="reset">Przywróć domyślne</button><button class="btn btn--ink" data-aura="close">Gotowe</button></footer></div></div>';
   }
   function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } }
+  function loginHTML() {
+    return '<div class="modal-scrim" data-aura="scrim"><div class="modal modal--login" role="dialog" aria-modal="true" aria-label="Zaloguj się">' +
+      '<header class="set-head"><div><div class="eyebrow">Konto Tatra Running</div><h3>Zaloguj się</h3>' +
+      '<p>Połącz tę obecność ze swoim kontem, aby mieć dostęp do historii zamówień i obozów.</p></div>' +
+      '<button class="modal__x" data-aura="close" aria-label="Zamknij"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button></header>' +
+      '<div class="set-body"><div class="set-group"><div class="set-group__label">Twoje dane</div>' +
+      '<div class="set-row"><div class="set-row__main"><label class="set-row__title" for="aura-login-name">Imię</label>' +
+      '<input id="aura-login-name" class="input" type="text" placeholder="np. Anna" autocomplete="given-name" style="width:100%;margin-top:.25rem"></div></div>' +
+      '<div class="set-row"><div class="set-row__main"><label class="set-row__title" for="aura-login-email">E-mail</label>' +
+      '<input id="aura-login-email" class="input" type="email" placeholder="twoj@email.pl" autocomplete="email" style="width:100%;margin-top:.25rem"></div></div>' +
+      '</div></div>' +
+      '<footer class="set-foot"><button class="btn btn--ink" data-aura="login-submit">Połącz tożsamość</button></footer>' +
+      '</div></div>';
+  }
+  function openLogin() {
+    closePanel(); closeModal();
+    document.body.insertAdjacentHTML('beforeend', loginHTML());
+    modalEl = document.body.lastElementChild; document.body.style.overflow = 'hidden';
+  }
   function openSettings() {
-    if (!readUser()) {
-      // Niezalogowany (unmeasured/ephemeral/recognised) — redirect na logowanie
-      window.location.href = '/zaloguj-sie';
-      return;
-    }
-    // Zalogowany — pokaż ustawienia
     closePanel(); closeModal();
     document.body.insertAdjacentHTML('beforeend', settingsHTML());
     modalEl = document.body.lastElementChild; document.body.style.overflow = 'hidden';
@@ -283,6 +296,14 @@
     var t = e.target.closest('[data-aura]'); if (!t) return;
     var k = t.getAttribute('data-aura');
     if (k === 'close' || k === 'scrim') { if (k === 'scrim' && e.target !== t) return; closeModal(); }
+    else if (k === 'login-submit') {
+      var nameEl = modalEl && modalEl.querySelector('#aura-login-name');
+      var emailEl = modalEl && modalEl.querySelector('#aura-login-email');
+      var n = (nameEl ? nameEl.value.trim() : '') || 'Gość';
+      var em = emailEl ? emailEl.value.trim() : '';
+      try { localStorage.setItem(USER_KEY, JSON.stringify({ name: n, email: em })); } catch (ex) {}
+      closeModal(); refresh();
+    }
     else if (k === 'seg') { var p = readPrefs(); p[t.dataset.name] = t.dataset.val; writePrefs(p); var m = openSettings; closeModal(); m(); }
     else if (k === 'svc' && window.TRKlaro) { TRKlaro.setConsent(t.dataset.svc, t.getAttribute('aria-checked') !== 'true'); closeModal(); openSettings(); }
     else if (k === 'reset') { writePrefs(DEFAULT_PREFS); if (window.TRKlaro) TRKlaro.optOutAll(); closeModal(); openSettings(); }
