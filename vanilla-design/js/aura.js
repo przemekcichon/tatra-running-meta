@@ -269,6 +269,13 @@
   }
   function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } }
   function openSettings() {
+    var state = getState();
+    if (state === 'unmeasured' || state === 'ephemeral') {
+      // Niezalogowany — redirect na logowanie (lub My Account WooCommerce)
+      window.location.href = '/zaloguj-sie';
+      return;
+    }
+    // Zalogowany — pokaż ustawienia
     closePanel(); closeModal();
     document.body.insertAdjacentHTML('beforeend', settingsHTML());
     modalEl = document.body.lastElementChild; document.body.style.overflow = 'hidden';
