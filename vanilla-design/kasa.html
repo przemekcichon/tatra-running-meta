@@ -116,76 +116,21 @@
     </div>
   </header>
 
-  <!-- ===== MAIN: kasa (makieta formularza; logika płatności = Faza 3/Woo) ===== -->
+  <!-- ===== MAIN: kasa — stan pusty (cart.items.length === 0); pełen checkout = Faza 3/Woo) ===== -->
   <main>
-    <section class="page-hero">
-      <div class="wrap wrap--wide">
-        <div class="breadcrumb">
-          <a href="index.html">Home</a>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18" /></svg>
-          <span>Koszyk</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18" /></svg>
-          <span>Kasa</span>
-        </div>
-        <div class="eyebrow">Kasa</div>
-        <h1>Finalizacja zamówienia</h1>
-      </div>
-    </section>
-    <section class="section" style="padding-top:8px">
-      <div class="wrap wrap--wide">
-        <form class="co-grid">
-          <div>
-            <div class="co-card">
-              <h3>Dane kontaktowe</h3>
-              <p class="hint">Na ten adres wyślemy potwierdzenie i ewentualny bon w PDF.</p>
-              <div class="cfg-row2">
-                <div class="field"><label>Imię</label><input class="cfg-input" required placeholder="Jan" /></div>
-                <div class="field"><label>Nazwisko</label><input class="cfg-input" required placeholder="Kowalski" /></div>
-              </div>
-              <div class="cfg-row2">
-                <div class="field"><label>E-mail</label><input class="cfg-input" type="email" required placeholder="jan@example.com" /></div>
-                <div class="field"><label>Telefon</label><input class="cfg-input" required placeholder="500 100 200" /></div>
-              </div>
-            </div>
-
-            <div class="co-card">
-              <h3>Metoda płatności</h3>
-              <p class="hint">Płatność obsługiwana przez bezpieczną bramkę.</p>
-              <label class="pay-opt sel">
-                <input type="radio" name="pay" checked />
-                <span class="pay-name">BLIK</span>
-                <span class="pay-logo"><span class="pay-badge">BLIK</span></span>
-              </label>
-              <label class="pay-opt">
-                <input type="radio" name="pay" />
-                <span class="pay-name">Przelewy24</span>
-                <span class="pay-logo"><span class="pay-badge">P24</span><span class="pay-badge">VISA</span><span class="pay-badge">MC</span></span>
-              </label>
-              <label class="pay-opt">
-                <input type="radio" name="pay" />
-                <span class="pay-name">Przelew tradycyjny</span>
-                <span class="pay-logo"><span class="pay-badge">IBAN</span></span>
-              </label>
-            </div>
+    <div class="wrap">
+      <div class="success">
+        <div class="drawer__empty" style="padding:60px 0">
+          <div class="ic" style="margin:0 auto 18px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></svg></div>
+          <h1 style="font-size:32px">Koszyk jest pusty</h1>
+          <p style="margin-top:12px">Dodaj obóz lub bon, aby przejść do kasy.</p>
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+            <a href="obozy.html" class="btn btn--ink">Przeglądaj obozy</a>
+            <a href="bony.html" class="btn btn--ghost"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" /><path d="M3 13h18M12 9v12" /><path d="M12 9S10 4 7.5 5.2C5.6 6.1 7 9 12 9Zm0 0s2-5 4.5-3.8C18.4 6.1 17 9 12 9Z" /></svg> Kup bon</a>
           </div>
-
-          <aside class="co-aside">
-            <div class="co-card" style="margin-bottom:0">
-              <h3 style="margin-bottom:16px">Twoje zamówienie</h3>
-              <div class="summary-line"><span>Dostawa</span><b style="color:var(--ink)">0 zł</b></div>
-              <div class="summary-total"><span>Razem</span><span>0 zł</span></div>
-              <button type="submit" class="btn btn--accent btn--block btn--lg" style="margin-top:18px">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.4 8.3-7 10-3.6-1.7-7-5-7-10V6l7-3Z" /><polyline points="9 12 11 14 15 10" /></svg> Zapłać 0 zł
-              </button>
-              <div class="trust-row" style="justify-content:center;margin-top:14px">
-                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.4 8.3-7 10-3.6-1.7-7-5-7-10V6l7-3Z" /><polyline points="9 12 11 14 15 10" /></svg> Bezpieczna płatność</span>
-                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 10 18 20 6" /></svg> Faktura VAT</span>
-              </div>
-            </div>
-          </aside>
-        </form>
+        </div>
       </div>
-    </section>
+    </div>
   </main>
 
   <!-- ===== FOOTER (kopia inline; KANONICZNE ŹRÓDŁO: partials/footer.html) ===== -->
