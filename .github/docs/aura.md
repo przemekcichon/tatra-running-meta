@@ -4,8 +4,12 @@
 > Konsoliduje trzy notatki koncepcyjne: *koncepcja*, *terminologia obecności*, *analityka przedzgodowa*.
 > Wzorzec: **aurapattern.eu** · demo: **northwind.eu**.
 >
+> **Dwa dokumenty źródłowe Aury, jedna prawda:**
+> - **`aura.md` (ten) = specyfikacja wzorca (CO):** stany, orb, panel, język, model pomiaru, mapowanie na projekt.
+> - **`aura-integracja-wordpress-woocommerce.md` = wdrożenie (JAK):** nazwy usług Klaro, hooki WP/WooCommerce, presety, integracje. **Przy konflikcie technicznym dok. integracji jest nadrzędny.**
+>
 > **Aura jest tool-agnostyczna** — to wzorzec UI + model stanów obecności, nie konkretny stack. W tym projekcie spinamy ją z:
-> - **Klaro** (JS) — przyjmowanie i przechowywanie zgód + bramkowanie embedów,
+> - **Klaro** (JS) — silnik zgód przyjmujący sygnały zgodowe i bramkujący embedy. **Brak osobnego panelu Klaro** — własny modal/notice schowany; **panel Aury jest jedyną widoczną kontrolką** zgód.
 > - **GA4 + server-side GTM (sGTM)** — analityka,
 > - **dobowe first-party cookie** — identyfikator śladu ulotnego (przed zgodą).
 
@@ -94,8 +98,10 @@ Przycisk losowania nowej tożsamości — widoczny tylko gdy niepowiązana i mie
 |---|---|---|
 | Numery telefonu | Dialer systemowy (`tel:`) | WhatsApp (`wa.me`) |
 | Filmy YouTube | Miniatura (nic z YT) | Odtwarzanie na miejscu |
-| Mapy | Zwykły link / OSM (bez referrera) | Osadzona mapa Google |
+| Mapy | Statyczny obraz / link (bez referrera) | Osadzona mapa OpenStreetMap (Leaflet) |
 | Formularze kontaktowe | Lekki fallback (bez zewn. JS) | Pełny formularz (Gravity Forms) |
+
+> **Mapy = OpenStreetMap/Leaflet** (hostowany lokalnie), nie Google Maps — zob. dok. integracji §5.3.
 
 **Stopka — drabina identyfikacji** (akcja zależna od stanu, o jeden szczebel dalej):
 - *ephemeral* → **„Pozwól tej stronie mnie pamiętać”** (zgoda → trwałe cookie, wciąż bez imienia)
@@ -152,19 +158,25 @@ Ustawienia przenoszą się przez wszystkie stany: *rozpoznany dziś, Ty jutro.*
 
 | Service Klaro | Co kontroluje | Stan / warstwa |
 |---|---|---|
-| `ga4-ephemeral` | GA4 #1 sandbox (ślad ulotny) | **przedzgodowe** — działa jako „funkcja usługi”, nie wymaga zgody; w UI Klaro oznaczone jako niezbędne/transparentne, z możliwością opt-out (→ Unmeasured) |
+| `ga4-essential` | GA4 #1 sandbox (ślad ulotny) | **przedzgodowe** — włączone od startu jako „funkcja usługi”, ale **z możliwością opt-out** w panelu Aury (→ Unmeasured) |
 | `ga4-analytics` | GA4 #2 produkcyjna | po zgodzie (stan 2) |
 | `youtube` | embed YouTube | po zgodzie (panel: prywatnie/wygodnie) |
-| `google-maps` | osadzona mapa Google | po zgodzie (panel: OSM/Google) |
+| `osm` | osadzona mapa OpenStreetMap | po zgodzie (panel: statyka/interaktywna) |
 | `gravity-forms` | pełny formularz | po zgodzie (panel: fallback/pełny) |
 
-> Decyzja do potwierdzenia: czy `ga4-ephemeral` modelujemy w Klaro jako usługę „required” z osobnym opt-outem (spójne z Unmeasured), czy całkowicie poza Klaro (tylko panel Aury steruje opt-outem). **Rekomendacja:** opt-out z pomiaru przedzgodowego obsługuje **panel Aury** (link „Wyłącz pomiar całkowicie”), a Klaro zarządza wyłącznie zgodami stanu 2–3 i embedami. Stan Unmeasured zapisujemy we własnym cookie/preferencji, którą respektuje sGTM.
+> **Zasada „brak required”:** żadna usługa nie jest twardo wymagana. `ga4-essential` startuje włączone (pomiar to funkcja żądanej usługi), ale **zawsze da się wyłączyć** w panelu Aury (link „Wyłącz pomiar całkowicie” → Unmeasured). Błędem banerów ciastkowych jest traktowanie „technicznie niezbędne” jako „nie do wyłączenia”; tu wola użytkownika może wyłączyć każdą usługę. Stan Unmeasured zapisujemy we własnej fladze, którą respektuje sGTM.
 
 ### 5.2 Bramkowanie embedów
 
-- Embedy (YouTube, mapy Google, pełny formularz) **nie ładują się** bez zgody — placeholder z przyciskiem „Załaduj”.
-- Przełączniki w panelu Aury i wybory w banerze Klaro są **zsynchronizowane** (jedno źródło prawdy: stan zgód Klaro + preferencje Aury).
-- Embedy mają wariant **prywatny** (miniatura YT, OSM/link, lekki fallback formularza) działający bez zgody.
+- Embedy (YouTube, mapa OSM, pełny formularz) **nie ładują się** bez zgody — placeholder z przyciskiem „Załaduj”.
+- Przyciski w panelu Aury są **jedyną widoczną kontrolką** (własny modal Klaro schowany) — jedno źródło prawdy: stan zgód Klaro + preferencje Aury.
+- Embedy mają wariant **prywatny** (miniatura YT, statyczny obraz/link mapy, lekki fallback formularza) działający bez zgody.
+
+### 5.3 Google Consent Mode v2
+
+- Tor przedzgodowy (ślad ulotny): `analytics_storage = denied` — GA4 #1 pracuje bez identyfikatorów ciasteczkowych.
+- Po zgodzie (`ga4-analytics` true): `analytics_storage = granted`, trwałe first-party cookie i stabilny `client_id`.
+- CMv2 spina się z sygnałami Klaro; szczegóły deduplikacji torów — dok. integracji §3.
 
 ### 5.3 Synchronizacja Aura ↔ Klaro
 
@@ -209,20 +221,21 @@ Ustawienia przenoszą się przez wszystkie stany: *rozpoznany dziś, Ty jutro.*
 1. **`js/aura.js`** — port `rng`, `auraIdentity`, `AuraAvatar`, `AuraMark` do vanilla; obsługa 4 stanów; seed w first-party cookie (dobowy dla stanu 1, trwały dla 2–3); brak seeda ⇒ Unmeasured.
 2. **Orb w headerze** — render orba z poświatą; klik → panel.
 3. **Panel obecności** (partial + JS) — nagłówek tożsamości, wskaźnik zaufania, presety *Na lekko / Szlakiem / Schronisko*, 4 przełączniki integracji, stopka drabiny + link opt-out.
-4. **`js/klaro.config.js`** — usługi: `ga4-analytics`, `youtube`, `google-maps`, `gravity-forms`; teksty PL; integracja z panelem Aury.
-5. **`js/embeds.js`** — bramkowanie embedów (placeholder + „Załaduj”), warianty prywatne (miniatura YT, OSM/link, fallback formularza).
+4. **`js/klaro.config.js`** — usługi: `ga4-essential` (ON, z opt-out), `ga4-analytics`, `youtube`, `osm`, `gravity-forms`; teksty PL; brak required; panel Aury jako jedyna widoczna kontrolka.
+5. **`js/embeds.js`** — bramkowanie embedów (placeholder + „Załaduj”), warianty prywatne (miniatura YT, statyczny obraz/link mapy OSM, fallback formularza).
 6. **Analityka** — snippet sGTM; logika dobowego cookie (stan 1, reset 24 h); trigger GA4 #2 po zgodzie z Klaro; respektowanie Unmeasured (brak ID).
 7. **Synchronizacja Aura ↔ Klaro** — wspólne źródło prawdy stanu zgód/preferencji.
 8. **Język** — przejrzeć wszystkie etykiety pod kątem zasad z sekcji 6.
 
 ---
 
-## 9. Do potwierdzenia (otwarte decyzje)
+## 9. Rozstrzygnięcia (faza 4.0 — ujednolicone)
 
-1. **`ga4-ephemeral` w Klaro czy poza?** — rekomendacja: opt-out przedzgodowy obsługuje panel Aury, Klaro zarządza stanami 2–3 + embedami (sekcja 5.1).
-2. **Identyfikator śladu ulotnego** — dobowe cookie po stronie klienta czy hash po stronie sGTM (IP + UA)? Rekomendacja: dobowe first-party cookie (prostsze, transparentne, łatwy opt-out).
-3. **Łączenie między urządzeniami (stan 3)** — hash z saltem (tylko first-party) vs. bez salta (między domenami). Rekomendacja: **z saltem**, wyłącznie first-party.
-4. **Salt i sGTM** — gdzie trzymać salt i konfigurację kontenera serwerowego (poza zakresem warstwy vanilla — notatka do etapu WP).
+1. **`ga4-essential`** modelowany w Klaro/panelu Aury jako usługa **włączona od startu z opt-outem** — nigdy „required”. Opt-out przedzgodowy obsługuje panel Aury (link „Wyłącz pomiar całkowicie” → Unmeasured), Klaro zarządza także stanami 2–3 + embedami.
+2. **Identyfikator śladu ulotnego** — **dobowe first-party cookie** (reset 24 h). Brak narzędzia na server-side hash IP+UA na tym etapie; cookie jest prostsze, transparentne, łatwy opt-out.
+3. **Łączenie między urządzeniami (stan 3)** — hash z solą, wyłącznie first-party.
+4. **Salt i sGTM** — salt i konfiguracja kontenera serwerowego po stronie WP (dok. integracji §8).
+5. **Mapy** = OpenStreetMap/Leaflet (lokalnie), nie Google. **Integracje** = telefon/WhatsApp, YouTube, mapy OSM, formularze Gravity (4).
 
 ---
 
