@@ -18,6 +18,8 @@ Pracujemy w **multiroot workspace**. Foldery (część dodawana stopniowo):
 
 **Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
 
+W szczegolnosci `go4taste-recipes-plugin/features/frontend-creator` traktujemy jako referencje implementacyjna frontendowego kreatora `acf_form()` (uklad krokowy w stylu AirBnB): tylko odczyt, zero edycji.
+
 ### Dostęp do żywej instancji WordPressa (`@localwp`)
 
 Strona dev działa w **Local (LocalWP)**: **Tatra Running New** (slug `tatra-running-new`, status *running*), katalog `~\Local Sites\tatra-running-new\app\public` (= root WP tego workspace).
@@ -47,7 +49,7 @@ Motyw i obie wtyczki własne budujemy w **architekturze vertical slice**:
 - **Obóz i bon = produkty WooCommerce** (NIE osobne CPT). Rozdział slugów przez kategorie produktowe + permalink `%product_cat%`: `/obozy/<slug>/`, `/bony/<slug>/`.
 - Kategorie obozów: `biegowe`, `skitour`, `kids`, `junior`.
 - **Trenerzy** = CPT `trener` + ACF. **Partnerzy** = ACF repeater (nie CPT).
-- Trenerów i obozy wprowadza się **z front-endu** przez `acf_form()` — wielostronicowy kreator (wzorzec wg `go4taste-recipes-plugin`).
+- Trenerów i obozy wprowadza się **z front-endu** przez `acf_form()` — wielostronicowy kreator (wzorzec wg `go4taste-recipes-plugin/features/frontend-creator`, tylko do odczytu).
 - Pola obozu poza natywnymi Woo trzymamy w ACF (zob. [plan.md](./docs/plan.md)).
 
 ## Workflow: fazy, ground-truth, wykonawca → recenzent
