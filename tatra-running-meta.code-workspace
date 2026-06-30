@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "../tatra-running-new/app/public/wp-content/plugins/tatrarunning-core"
+		},
+		{
+			"path": "../go4taste-przepisy/app/public/wp-content/plugins/go4taste-recipes-plugin"
 		}
 	]
 }

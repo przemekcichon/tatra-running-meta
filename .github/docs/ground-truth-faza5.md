@@ -1,159 +1,168 @@
-# Ground-truth Faza 5 — mapowanie vanilla na WordPress
+# Ground-truth Faza 5 (TYLKO ODCZYT)
 
-Teraz mapujemy artefakty vanilla-design na stos WP (motyw, wtyczki, dane).
+Cel: kontrakt wejściowy dla Fazy 5 (mapowanie `vanilla-design` -> WordPress), oparty wyłącznie o kod na dysku.
 
-## 1. Producent → Konsument
+## 1. Producent -> Konsument
 
-**Producent (vanilla-design/):** 19 stron HTML + assets + 6 skryptów (cart, accordion, aura, klaro, embeds) + CSS → gotowe do osadzenia w WP.
+- Producent: `vanilla-design/` (19 plikow HTML, 6 plikow JS, 4 pliki CSS).
+- Konsument: dokument mapowania fazy 5 opisujacy `HTML -> szablony WP`, `JS/CSS -> enqueue`, `dane -> Woo/ACF/CPT`.
 
-**Konsument (Faza 5):** Dokument mapowania `vanilla-design → WP` zawierający:
-- HTML template → PHP plik motywu (front-page.php, single-product.php, page-*.php, itd.)
-- JS (vanilla) → wpisy do `wp_enqueue_script()` w motywie + hook/action
-- CSS (vanilla) → `wp_enqueue_style()` w motywie
-- Dane statyczne (Camp/Trainer/Partner) → produkt Woo / CPT trener / ACF repeater
-- Embedy (mapa OSM, YouTube, formularz) → Klaro + bramkowanie w WP
-- Klaro/Aura/analityka → snippet sGTM + GA4 #1/#2 + cookie dobowy
-- Orb/Panel NIE-cacheowalne → ESI lub lazy JS
-- Presety Aury → przechowywanie w cookie / localStorage
-- Integracje: Gravity Forms (kontakt/formularz), WooCommerce (koszyk/kasa), ACF (pola produktu/trenera), Mailchimp (newsletter)
+## 2. Inwentaryzacja artefaktow producenta
 
-## 2. Inwentaryzacja (literały kod-vanilla → WP)
+### 2.1 Strony HTML (19)
 
-### localStorage/cookie (vanilla → WP)
-| Vanilla localStorage | WP → |
-|---|---|
-| `tr_prefs_v1` (prefs) | user meta lub session / cookie |
-| `tr_user_v1` (user mock) | WC_Customer / wp_get_current_user() |
-| `tr_cart_v1` (koszyk) | WC_Cart |
-| `tr_aura_seed` (trwały seed) | first-party cookie (WP Set-Cookie) |
-| `tr_aura_day` (dobowy seed) | dobowe first-party cookie (reset 24h) |
-| `aura_klaro` (konsenty) | Klaro JS cookie |
-| `aura_unmeasured` (opt-out) | Klaro flaga / sGTM sygnał |
+`blog-post.html`, `blog.html`, `bony.html`, `dokumenty.html`, `index.html`, `kasa.html`, `kontakt.html`, `koszyk.html`, `newsletter.html`, `oboz.html`, `obozy-junior.html`, `obozy-kids.html`, `obozy.html`, `partnerzy.html`, `prywatnosc.html`, `regulamin.html`, `trener.html`, `zasady-newslettera.html`, `zespol.html`.
 
-### Klucze literałowe 
-- Phone: `+48500152300`, `48500152300`
-- Presety: `smooth`→`Na lekko`, `balanced`→`Szlakiem`, `sanctuary`→`Schronisko` (mapować na ustawienia profilu/preferencje)
-- Stany Aury: `unmeasured`, `ephemeral`, `recognised`, `linked` → mapować na WC user status / mater / auth level
-- Usługi Klaro (6): `ga4-essential`, `ga4-analytics`, `youtube`, `osm`, `whatsapp`, `gravity-forms`
+### 2.2 JavaScript (6)
 
-### Mapa HTML → PHP (motyw tatrarunning-theme)
-| Vanilla HTML | WP szablon | Rola |
-|---|---|---|
-| index.html | front-page.php | Home |
-| obozy.html | archive-product.php (kategoria obozy) | Archiwum obozów |
-| oboz.html | single-product.php (kategoria obozy) | Single obozu (karta + ACF) |
-| obozy-kids.html | archive-product.php (filtr kids) | Archive kids |
-| obozy-junior.html | archive-product.php (filtr junior) | Archive junior |
-| zespol.html | page-team.php (właściwie page-*) | Zespół (CPT trener query) |
-| trener.html | single-trainer.php (custom CPT template) | Single trenera |
-| partnerzy.html | page-partners.php | Partnerzy (ACF repeater) |
-| bony.html | archive-product.php (kategoria bony) | Archiwum bonów |
-| koszyk.html | cart.php (Woo override) | Koszyk (WC_Cart) |
-| kasa.html | checkout.php (Woo override) | Kasa (WC_Checkout) |
-| kontakt.html | page-contact.php | Kontakt (Gravity Form) |
-| blog.html | home.php / archive.php | Blog archiwum |
-| blog-post.html | single.php | Single wpisu |
-| dodaj-oboz.html | page-add-camp.php | Kreator (acf_form wizard) |
-| newsletter.html | (custom CPT) newsletter-thank.php | Podziękowanie newsletter (post type) |
-| regulamin.html, zasady-newslettera.html, prywatnosc.html, dokumenty.html | page-*.php (natywne strony) | Strony prawne |
+`js/accordion.js`, `js/aura.js`, `js/cart.js`, `js/embeds.js`, `js/klaro.config.js`, `js/voucher.js`.
 
-### JS (vanilla) → hooki WP
-| Vanilla JS | WP hook / gdzie ładować |
-|---|---|
-| js/cart.js | wp_enqueue_script + on WooCommerce pages (is_cart, is_checkout) |
-| js/accordion.js | wp_enqueue_script + on single camp (is_singular('product')) |
-| js/aura.js | wp_enqueue_script global (all pages) + `wp_footer` |
-| js/klaro.config.js | wp_enqueue_script global + `wp_head` (PRZED aura/analytics) |
-| js/embeds.js | wp_enqueue_script + `wp_footer` |
+### 2.3 CSS (4)
 
-### CSS (vanilla) → motyw
-| Vanilla CSS | WP |
-|---|---|
-| css/tokens.css | wp_enqueue_style (root vars, :root) |
-| css/base.css | wp_enqueue_style |
-| css/components.css | wp_enqueue_style (+ aura, klaro, embeds klasy) |
-| css/pages.css | wp_enqueue_style |
+`css/tokens.css`, `css/base.css`, `css/components.css`, `css/pages.css`.
 
-## 3. Model danych (vanilla static → WP dynamic)
+## 3. Literały kontraktowe (przepisane z kodu)
 
-### Produkty WooCommerce (obozy + bony)
-- Kategoria główna: `obozy` lub `bony` (primary category → permalink `%product_cat%`)
-- Podkategorie obozy: `biegowe`, `skitour`, `kids`, `junior`
-- Pola ACF:
-  - Obóz: `deposit`, `location`, `region`, `dates`, `days`, `level`, `type`, `status`, `featured`, `hero`, `lead`, `intro[]`, `included[]`, `excluded[]`, `plan[]` (repeater), `where`, `sleep`, `prep`, `coachSlugs` (relationship do CPT)
-  - Bon: (zdefiniować w ACF + Woo product meta dla konfigu)
-- Cena natywna WooCommerce, stan magazynowy = wolne miejsca
+### 3.1 Klucze storage/cookie
 
-### CPT `trener` + ACF
-- Pola: imię, nazwisko, bio, zdjęcie, specjalizacja (lista), kat. (lista), relacja do produktów-obozów (Relationship field)
-- Mapa vanilla adny.jsx `TRAINERS` → query `get_posts(['post_type' => 'trener'])`
+- `tr_prefs_v1`
+- `tr_user_v1`
+- `tr_aura_seed`
+- `tr_aura_day`
+- `aura_unmeasured`
+- `tr_cart_v1`
+- `aura_klaro`
 
-### ACF repeater `partner` (nie CPT)
-- Store na stronie-partnerzy lub ACF Options (global)
-- Pola: logo, nazwa, url, opis
+### 3.2 Literały domenowe Aury/Klaro
 
-### Wpisy natywne WP
-- Blog posts (single.php) z kategoriami (mapować z vanilla `POSTS` структуру)
+- Stany: `unmeasured`, `ephemeral`, `recognised`, `linked`
+- Presety: `smooth`, `balanced`, `sanctuary`
+- Usługi zgody: `ga4-essential`, `ga4-analytics`, `youtube`, `osm`, `whatsapp`, `gravity-forms`
+- Event synchronizacji: `aura:klaro-change`
 
-### Newsletter (Gravity Forms + Mailchimp add-on)
-- Footer form na każdej stronie
-- Submit → Mailchimp list via Gravity Forms integration
+### 3.3 Literały kontaktowe
 
-## 4. Integracje wtyczek
+- `+48500152300`
+- `48500152300`
 
-| Wtyczka | Funkcja | Vanilla mapping |
-|---|---|---|
-| WooCommerce | Produkty, koszyk, kasa | cart.js + checkout |
-| ACF PRO | Pola produktów/trenera/partnerów, formularze | aura.js (settings), admin w WP |
-| Gravity Forms | Kontakt, formularz newsletter, kreator | embeds.js (form gating), kontakt.html |
-| Klaro JS | Zarządzanie zgodą, bramkowanie | klaro.config.js (6 usług) + aura.js (sync) |
-| sGTM (server-side GTM) | Pomiar przedzgodowy + po zgodzie | snippet w wp_head, GA4 #1/#2 |
-| Wordfence | Bezpieczeństwo | (konfiguracja, nie kod) |
-| Mailchimp add-on | Newsletter | Gravity Forms integration |
-| PayU / Przelewy24 | Płatności | WooCommerce payment gateway |
+## 4. Ksztalt danych (skomentowany JSON)
 
-## 5. Treści NIE-cacheowalne (LiteSpeed ESI / lazy JS)
-
-- Orb + panel Aury (`.acct`, `.aura-panel`)
-- Cart badge (`.cart-badge`)
-- Stan konta (zalogowany/niezalogowany)
-- Nonce'y WooCommerce
-
-**Implementacja:** ESI tag w motywie (`get_header()` → `<!--esi ... -->`) LUB lazy JS ładujący fragment przez JS zamiast PHP.
-
-## 6. Analityka (sGTM + GA4)
-
-- **GA4 #1 sandbox (ślad ulotny):** przed zgodą, dobowe cookie `tr_aura_day`, identyfikator ulotny
-- **GA4 #2 produkcja:** po zgodzie (event `aura:klaro-change`), trwałe first-party cookie `tr_aura_seed`
-- **sGTM kontener:** redirect payload, Google Consent Mode v2 (analytics_storage denied/granted)
-- **Cookie dobowy:** `Set-Cookie: tr_aura_day=...; Max-Age=86400; SameSite=Lax`
-
-## 7. Struktura motywy (tatrarunning-theme po Fazie 5)
-
-```
-functions.php                    (enqueue scripts/styles, hooks)
-header.php                       (orb + panel, ESI marker)
-footer.php                       (Klaro, sGTM, aura, analytics)
-front-page.php                   (home)
-archive-product.php              (obozy/bony archiwum)
-single-product.php               (produkty z ACF)
-archive-product-category.php     (filtry: biegowe/skitour/kids)
-page-*.php                       (strony custom)
-single-trainer.php               (CPT trener)
-single.php                        (blog posts)
-cart.php, checkout.php           (Woo overrides)
-assets/js/
-  - minified bundle (cart, accordion, aura, klaro, embeds)
-assets/css/
-  - minified bundle (tokens, base, components, pages)
+```jsonc
+// localStorage['tr_prefs_v1']
+{
+  "contactChannel": "auto", // 'auto' | 'phone' | 'whatsapp'
+  "youtube": "ask",         // 'auto' | 'ask'
+  "maps": "osm",            // 'osm' | 'google'
+  "consent": {
+    "analytics": false,
+    "personalization": false,
+    "marketing": false
+  }
+}
 ```
 
-## 8. Bez zmian (read-only celem porównania)
+```jsonc
+// localStorage['tr_user_v1']
+{
+  "name": "Jan",
+  "email": "jan@example.com"
+}
+```
 
-- react-design/ (prototyp, referenca)
-- `woocommerce/` (wtyczka — czytamy szablony)
-- `advanced-custom-fields-pro/` (API — bez zmian)
+```jsonc
+// localStorage['tr_aura_day']
+{
+  "d": "2026-06-30", // YYYY-MM-DD
+  "seed": 123456789
+}
+```
 
----
+```jsonc
+// cookie 'aura_klaro' (JSON stringify + encodeURIComponent)
+{
+  "ga4-essential": true,
+  "ga4-analytics": false,
+  "youtube": false,
+  "osm": false,
+  "whatsapp": false,
+  "gravity-forms": false
+}
+```
 
-**Gotowe do Fazy 5:** Wszystkie literały, mapowania, integracje, plany ESI, struktura motywu.
+```jsonc
+// localStorage['tr_cart_v1'] = Array<CartItem>
+[
+  {
+    "key": "camp-...",      // required
+    "type": "camp",         // required
+    "title": "...",         // required
+    "price": 1999,            // required
+    "qty": 1,                 // required
+    "sub": "...",           // optional
+    "image": "assets/..."   // optional
+  },
+  {
+    "key": "voucher-...",   // required
+    "type": "voucher",      // required
+    "title": "Bon ...",     // required
+    "price": 500,             // required
+    "qty": 1,                 // required
+    "sub": "Wersja ...",    // optional
+    "voucherTheme": "warm"  // optional; uzywane dla type='voucher'
+  }
+]
+```
+
+## 5. Pola opcjonalne i warunki
+
+- `tr_user_v1` moze byc `null` (uzytkownik niezalogowany w makiecie).
+- `tr_aura_day` moze nie istniec lub miec inna date (`d`) niz dzisiejsza; wtedy generowany jest nowy `seed`.
+- `tr_aura_seed` moze nie istniec; jest tworzone leniwie.
+- W `tr_cart_v1`: `sub`, `image`, `voucherTheme` sa opcjonalne zaleznie od typu pozycji.
+- `data-open` i `data-title` w embedach sa opcjonalne; fallback jest obslugiwany w `embeds.js`.
+
+## 6. Sygnatury helperow do reuzycia
+
+### `vanilla-design/js/aura.js`
+
+- `rng(seed)`
+- `auraIdentity(seed)`
+- `readPrefs()`
+- `writePrefs(p)`
+- `readUser()`
+- `getState()`
+- `seedFor(state)`
+- `suspendedCount()`
+
+### `vanilla-design/js/cart.js`
+
+- `zl(n)`
+- `voucherArt(theme, amount, recipient, custom)`
+- `read()`
+- `add(item)`
+- `remove(key)`
+- `setQty(key, qty)`
+- `clear()`
+
+### `vanilla-design/js/klaro.config.js`
+
+- `consents()`
+- `setConsent(name, on)`
+- `optOutAll()`
+- `saveAndApply()`
+
+### `vanilla-design/js/embeds.js`
+
+- `consent(svc)`
+- `paint()`
+
+## 7. Czy istnieje juz kod robiacy Faze 5?
+
+- Tak: istnieje szkic dokumentu `ground-truth-faza5.md` (ten plik).
+- Nie: brak oddzielnego, finalnego dokumentu mapowania fazy 5 w formie docelowej artefaktu.
+- Nie: brak implementacji WP (foldery `tatrarunning-theme`, `tatrarunning-core`, `tatrarunning-aura` sa puste).
+
+## 8. Rozbieznosci z planem wykryte na starcie
+
+- W producerze nie ma pliku `dodaj-oboz.html`.
+- W producerze jest `js/voucher.js`, ktory musi byc uwzgledniony w mapowaniu.
