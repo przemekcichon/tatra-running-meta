@@ -76,7 +76,33 @@ Każda faza to **nowa sesja** i cykl:
 ## Konwencje
 
 - Komunikacja i treści projektowe po polsku.
-- **Git / wersjonowanie** (pełna procedura + linki do repo: [plan.md](./docs/plan.md) → „Workflow git"): **wszystkie cztery repozytoria** (`tatrarunning-core`/`-theme`/`-aura` **oraz `tatra-running-meta`**) są pod git/PR. **GitHub CLI (`gh`) jest zainstalowane.** Na **każdą fazę** wykonawca tworzy **branch**, robi **atomowe commity** (Conventional Commits, EN, bez sekretów) i **obowiązkowo otwiera PR** (`gh pr create`) — recenzja idzie na diffie PR. **Wykonawca NIE merguje i NIE robi force-push; decyzję o merge podejmuje człowiek.** Wydania znaczymy **tagami wg SemVer** — **wykonawca sugeruje numer wersji** (z uzasadnieniem bumpa), **tag nakłada człowiek** po merge. Ground-truth jest TYLKO DO ODCZYTU (bez brancha/commitów/tagów).
+- **Git / wersjonowanie:** kanoniczna procedura jest opisana poniżej w sekcji „Workflow git / wersjonowanie (commit → branch → PR → merge → tag)”.
 - Wtyczki docelowe wypychane na produkcję przez **WP Pusher**; bezpieczeństwo — **Wordfence**; cache — **LiteSpeed** (treści zależne od stanu: ESI / nie cache'ować, zob. [plan.md](./docs/plan.md)).
 - Zgody i bramkowanie embedów: **Klaro** (zob. [aura.md](./docs/aura.md)).
 - Newsletter/kontakt: **Gravity Forms** (+ Mailchimp add-on). Płatności: **PayU lub Przelewy24**.
+
+## Workflow git / wersjonowanie (commit → branch → PR → merge → tag)
+
+> Ta sekcja jest źródłem prawdy dla zasad pracy wykonawcy i recenzenta w cyklu fazowym.
+
+**Repozytoria (wszystkie pod git/PR).** Każdy artefakt ma własne repo na GitHubie i podlega pełnemu cyklowi gitowemu — **również `tatra-running-meta`** (dokumentacja, plan, prototyp, inwentaryzacja):
+
+| Folder roboczy | Repo GitHub |
+|---|---|
+| `tatrarunning-core` | https://github.com/przemekcichon/tatrarunning-core |
+| `tatrarunning-theme` | https://github.com/przemekcichon/tatrarunning-theme |
+| `tatrarunning-aura` | https://github.com/przemekcichon/tatrarunning-aura |
+| `tatra-running-meta` | https://github.com/przemekcichon/tatra-running-meta |
+
+> Repozytoria `core`/`theme`/`aura` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
+
+**Cykl gitowy fazy — obowiązuje dla KAŻDEGO repo (w tym meta):**
+
+1. **Branch na każdą fazę.** Wykonawca tworzy branch fazy (np. `feature/<artefakt>-<faza>`, `docs/<faza>` dla meta) i pracuje na nim — **nigdy bezpośrednio na `main`/`master`**.
+2. **Atomowe commity.** Każdy commit = jedna spójna zmiana, w **Conventional Commits (EN)** (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`). Bez `git add .` na ślepo; **bez sekretów** w commitcie (klucze PayU/P24, GA4/sGTM, Mailchimp → poza repo).
+3. **Push + PR (obowiązkowo).** Po zakończeniu realizacji etapu wykonawca **pushuje branch i otwiera PR** (`gh pr create`) — opis PR odzwierciedla aktualny stan brancha. Diff PR jest wejściem do recenzji (input #1 recenzenta). **PR jest wymagany — nie pomijamy go.**
+4. **Recenzja na diffie.** Recenzent-subagent ocenia zmiany z diffu/PR (czyta też kod z dysku). Read-only — **nie merguje, nie pushuje, nie robi force-push**.
+5. **Merge należy do człowieka.** Wykonawca **NIE merguje** i **NIE robi force-push**. Po checkpoincie i naniesieniu poprawek **decyzję o merge PR podejmuje człowiek**.
+6. **Wersjonowanie tagami (SemVer).** Wydania znaczymy **tagami wg [SemVer](https://semver.org/lang/pl/)** (`MAJOR.MINOR.PATCH`, np. `v0.2.0`). **Wykonawca SUGERUJE numer wersji**, kiedy zmiana na to zasługuje (zakończona faza / funkcjonalność), z krótkim uzasadnieniem bumpa (patch = poprawki, minor = nowa funkcjonalność wstecznie zgodna, major = zmiana łamiąca). **Tag nakłada człowiek** po merge — wykonawca sam nie taguje. Każde repo wersjonuje się niezależnie.
+
+> Zasada nadrzędna: zadanie ground-truth jest TYLKO DO ODCZYTU — **bez brancha, bez commitów, bez tagów**.

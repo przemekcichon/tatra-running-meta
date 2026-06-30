@@ -93,29 +93,11 @@ Na produkcie (kat. `obozy`), poza natywnymi polami Woo (cena, stan magazynowy = 
 
 ## Workflow git / wersjonowanie (commit → branch → PR → merge → tag)
 
-> Spina cykl fazowy z gitem. Rola recenzenta jest „przed-merge" — recenzja idzie na diffie PR, a wykonawca **nie** merguje sam. **GitHub CLI (`gh`) jest zainstalowane** — wykonawca używa `gh pr create` do otwierania PR.
+Szczegółowe zasady workflow git/PR/tagów zostały przeniesione do [`copilot-instructions.md`](../copilot-instructions.md) (sekcja „Konwencje”).
 
-**Repozytoria (wszystkie pod git/PR).** Każdy artefakt ma własne repo na GitHubie i podlega pełnemu cyklowi gitowemu — **również `tatra-running-meta`** (dokumentacja, plan, prototyp, inwentaryzacja):
+W tym planie zostaje tylko skrót: na każdą fazę pracujemy na branchu, wykonawca robi atomowe commity i obowiązkowo otwiera PR, recenzja odbywa się na diffie PR, decyzję o merge i tagach podejmuje człowiek.
 
-| Folder roboczy | Repo GitHub |
-|---|---|
-| `tatrarunning-core` | https://github.com/przemekcichon/tatrarunning-core |
-| `tatrarunning-theme` | https://github.com/przemekcichon/tatrarunning-theme |
-| `tatrarunning-aura` | https://github.com/przemekcichon/tatrarunning-aura |
-| `tatra-running-meta` | https://github.com/przemekcichon/tatra-running-meta |
-
-> Repozytoria `core`/`theme`/`aura` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
-
-**Cykl gitowy fazy — obowiązuje dla KAŻDEGO repo (w tym meta):**
-
-1. **Branch na każdą fazę.** Wykonawca tworzy branch fazy (np. `feature/<artefakt>-<faza>`, `docs/<faza>` dla meta) i pracuje na nim — **nigdy bezpośrednio na `main`/`master`**.
-2. **Atomowe commity.** Każdy commit = jedna spójna zmiana, w **Conventional Commits (EN)** (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`…). Bez `git add .` na ślepo; **bez sekretów** w commitcie (klucze PayU/P24, GA4/sGTM, Mailchimp → poza repo).
-3. **Push + PR (obowiązkowo).** Po zakończeniu realizacji etapu wykonawca **pushuje branch i otwiera PR** (`gh pr create`) — opis PR odzwierciedla aktualny stan brancha. Diff PR jest wejściem do recenzji (input #1 recenzenta). **PR jest wymagany — nie pomijamy go.**
-4. **Recenzja na diffie.** Recenzent-subagent ocenia zmiany z diffu/PR (czyta też kod z dysku). Read-only — **nie merguje, nie pushuje, nie robi force-push**.
-5. **Merge należy do człowieka.** Wykonawca **NIE merguje** i **NIE robi force-push**. Po checkpoincie i naniesieniu poprawek **decyzję o merge PR podejmuje człowiek**.
-6. **Wersjonowanie tagami (SemVer).** Wydania znaczymy **tagami wg [SemVer](https://semver.org/lang/pl/)** (`MAJOR.MINOR.PATCH`, np. `v0.2.0`). **Wykonawca SUGERUJE numer wersji**, kiedy zmiana na to zasługuje (zakończona faza / funkcjonalność), z krótkim uzasadnieniem bumpa (patch = poprawki, minor = nowa funkcjonalność wstecznie zgodna, major = zmiana łamiąca). **Tag nakłada człowiek** po merge — wykonawca sam nie taguje. Każde repo wersjonuje się niezależnie.
-
-> Zasada nadrzędna: zadanie ground-truth jest TYLKO DO ODCZYTU — **bez brancha, bez commitów, bez tagów** (zob. [`ground-truth-start-fazy.prompt.md`](../prompts/ground-truth-start-fazy.prompt.md)).
+Zasada nadrzędna pozostaje bez zmian: zadanie ground-truth jest TYLKO DO ODCZYTU — bez brancha, commitów i tagów (zob. [`ground-truth-start-fazy.prompt.md`](../prompts/ground-truth-start-fazy.prompt.md)).
 
 ## Struktura docelowa wersji vanilla
 
