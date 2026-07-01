@@ -1,6 +1,6 @@
 # Tatra Running — instrukcje projektu (migracja na WordPress)
 
-Migracja prototypu frontendu `tatrarunning.pl` (React, CDN + Babel, hash-SPA) na produkcyjny WordPress + WooCommerce. Pełny plan: [plan.md](./docs/plan.md). Specyfikacja wzorca Aura: [aura.md](./docs/aura.md).
+Migracja prototypu frontendu `tatrarunning.pl` (React, CDN + Babel, hash-SPA) na produkcyjny WordPress + WooCommerce. Pełny plan: [plan.md](./docs/plan.md).
 
 ## Środowisko: multiroot workspace
 
@@ -11,12 +11,11 @@ Pracujemy w **multiroot workspace**. Foldery (część dodawana stopniowo):
 | `tatrarunning-meta` (ten) | Plan, dokumentacja, agenci, prompty, inwentaryzacja, prototyp `react-design/` | **TAK** |
 | `tatrarunning-core` | Wtyczka własna: CPT + pola ACF + frontend creator (`acf_form()`) | **TAK** |
 | `tatrarunning-theme` | Motyw WordPress | **TAK** |
-| `tatrarunning-aura` | Wtyczka własna: wdrożenie wzorca Aura (orb, panel, analityka) wg [aura.md](./docs/aura.md) | **TAK** |
 | `woocommerce` | Referencja — szablony budujemy **w oparciu o nią** | **READ-ONLY** |
 | `go4taste-recipes-plugin` | Referencja dla frontend creatora (wzorzec `acf_form()`) | **READ-ONLY** |
 | `acf-pro` (Advanced Custom Fields PRO) | Referencja API ACF | **READ-ONLY** |
 
-**Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
+**Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`.
 
 W szczegolnosci `go4taste-recipes-plugin/features/frontend-creator` traktujemy jako referencje implementacyjna frontendowego kreatora `acf_form()` (uklad krokowy w stylu AirBnB): tylko odczyt, zero edycji.
 
@@ -39,10 +38,10 @@ Działa też **język naturalny**, np. `@localwp What plugins are active?`, `@lo
 
 ## Architektura: vertical slice
 
-Motyw i obie wtyczki własne budujemy w **architekturze vertical slice**:
+Motyw i wtyczkę własną budujemy w **architekturze vertical slice**:
 - Kod jednej funkcjonalności trzymamy razem (od danych po render), nie rozbijany na poziome warstwy techniczne.
 - Bootstrap cienki; zero abstrakcji „na zapas”.
-- Granica artefakt↔artefakt (wtyczka/motyw) jest nadrzędna wobec granic slice'ów — slice nie przecieka między `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
+- Granica artefakt↔artefakt (wtyczka/motyw) jest nadrzędna wobec granic slice'ów — slice nie przecieka między `tatrarunning-core`, `tatrarunning-theme`.
 
 ## Model danych (skrót — pełnia w [plan.md](./docs/plan.md))
 
@@ -70,7 +69,6 @@ Każda faza to **nowa sesja** i cykl:
 ## Dokumenty referencyjne (źródła prawdy w tym folderze)
 
 - [plan.md](./docs/plan.md) — plan migracji, fazy, mapowanie React→vanilla→WP, model danych.
-- [aura.md](./docs/aura.md) — pełna specyfikacja wzorca Aura (4 stany, panel, Klaro, analityka GA4/sGTM).
 - `docs/data-inventory.md` — inwentaryzacja widoków i grup danych (powstaje w Fazie 0.5).
 - [ground-truth-start-fazy.prompt.md](./prompts/ground-truth-start-fazy.prompt.md) — kontrakt na start każdej fazy.
 - [agents/wykonawca.agent.md](./agents/wykonawca.agent.md), [agents/recenzent.agent.md](./agents/recenzent.agent.md) — definicje agentów cyklu.
@@ -80,7 +78,6 @@ Każda faza to **nowa sesja** i cykl:
 - Komunikacja i treści projektowe po polsku.
 - **Git / wersjonowanie:** kanoniczna procedura jest opisana poniżej w sekcji „Workflow git / wersjonowanie (commit → branch → PR → merge → tag)”.
 - Wtyczki docelowe wypychane na produkcję przez **WP Pusher**; bezpieczeństwo — **Wordfence**; cache — **LiteSpeed** (treści zależne od stanu: ESI / nie cache'ować, zob. [plan.md](./docs/plan.md)).
-- Zgody i bramkowanie embedów: **Klaro** (zob. [aura.md](./docs/aura.md)).
 - Newsletter/kontakt: **Gravity Forms** (+ Mailchimp add-on). Płatności: **PayU lub Przelewy24**.
 
 ## Workflow git / wersjonowanie (commit → branch → PR → merge → tag)
@@ -93,10 +90,9 @@ Każda faza to **nowa sesja** i cykl:
 |---|---|
 | `tatrarunning-core` | https://github.com/przemekcichon/tatrarunning-core |
 | `tatrarunning-theme` | https://github.com/przemekcichon/tatrarunning-theme |
-| `tatrarunning-aura` | https://github.com/przemekcichon/tatrarunning-aura |
 | `tatra-running-meta` | https://github.com/przemekcichon/tatra-running-meta |
 
-> Repozytoria `core`/`theme`/`aura` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
+> Repozytoria `core`/`theme` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
 
 **Cykl gitowy fazy — obowiązuje dla KAŻDEGO repo (w tym meta):**
 

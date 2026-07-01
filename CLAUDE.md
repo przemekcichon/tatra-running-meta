@@ -1,6 +1,6 @@
 # Tatra Running — instrukcje projektu (migracja na WordPress)
 
-Migracja prototypu frontendu `tatrarunning.pl` (React, CDN + Babel, hash-SPA) na produkcyjny WordPress + WooCommerce. Pełny plan: [plan.md](.github/docs/plan.md). Specyfikacja wzorca Aura: [aura.md](.github/docs/aura.md).
+Migracja prototypu frontendu `tatrarunning.pl` (React, CDN + Babel, hash-SPA) na produkcyjny WordPress + WooCommerce. Pełny plan: [plan.md](.github/docs/plan.md).
 
 ## Środowisko: multiroot workspace
 
@@ -11,12 +11,11 @@ Pracujemy w **multiroot workspace**. Foldery (część dodawana stopniowo):
 | `tatrarunning-meta` (ten) | Plan, dokumentacja, agenci, prompty, inwentaryzacja, prototyp `react-design/` | **TAK** |
 | `tatrarunning-core` | Wtyczka własna: CPT + pola ACF + frontend creator (`acf_form()`) | **TAK** |
 | `tatrarunning-theme` | Motyw WordPress | **TAK** |
-| `tatrarunning-aura` | Wtyczka własna: wdrożenie wzorca Aura (orb, panel, analityka) wg [aura.md](.github/docs/aura.md) | **TAK** |
 | `woocommerce` | Referencja — szablony budujemy **w oparciu o nią** | **READ-ONLY** |
 | `go4taste-recipes-plugin` | Referencja dla frontend creatora (wzorzec `acf_form()`) | **READ-ONLY** |
 | `acf-pro` (Advanced Custom Fields PRO) | Referencja API ACF | **READ-ONLY** |
 
-**Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
+**Zasada READ-ONLY:** w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` **nie wolno wprowadzać żadnych zmian** — czytamy je wyłącznie jako źródło prawdy o API i wzorcach. Cały kod własny powstaje w `tatrarunning-core`, `tatrarunning-theme`.
 
 W szczegolnosci `go4taste-recipes-plugin/features/frontend-creator` traktujemy jako referencje implementacyjna frontendowego kreatora `acf_form()` (uklad krokowy w stylu AirBnB): tylko odczyt, zero edycji.
 
@@ -39,10 +38,10 @@ Przykłady w języku naturalnym: „What plugins are active?”, „What is the 
 
 ## Architektura: vertical slice
 
-Motyw i obie wtyczki własne budujemy w **architekturze vertical slice**:
+Motyw i wtyczkę własną budujemy w **architekturze vertical slice**:
 - Kod jednej funkcjonalności trzymamy razem (od danych po render), nie rozbijany na poziome warstwy techniczne.
 - Bootstrap cienki; zero abstrakcji „na zapas”.
-- Granica artefakt↔artefakt (wtyczka/motyw) jest nadrzędna wobec granic slice'ów — slice nie przecieka między `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura`.
+- Granica artefakt↔artefakt (wtyczka/motyw) jest nadrzędna wobec granic slice'ów — slice nie przecieka między `tatrarunning-core`, `tatrarunning-theme`.
 
 ## Model danych (skrót — pełnia w [plan.md](.github/docs/plan.md))
 
@@ -76,16 +75,15 @@ W tym projekcie **główna sesja Claude jest wykonawcą** cyklu fazowego (recenz
 1. **Kod na dysku** — najwyższa. Ground-truth bije pamięć czatu i plan.
 2. **Ten plik (CLAUDE.md)** — multiroot, READ-ONLY referencje, vertical slice, workflow.
 3. [plan.md](.github/docs/plan.md) — fazy, zakres, mapowanie React→vanilla→WP, model danych.
-4. [aura.md](.github/docs/aura.md) — specyfikacja wzorca Aura (gdy faza dotyka Aury).
-5. [data-inventory.md](.github/docs/data-inventory.md) — **gotowa** inwentaryzacja (Faza 0.5): literały przepisane z `react-design/` (kształty `CAMPS`/`TRAINERS`/`POSTS`/`PARTNERS`/bonów), pola opcjonalne i warunki renderu, relacje, kształt pozycji koszyka, mapowanie na Woo/ACF/CPT, sygnatury helperów, otwarte kwestie. Traktuj jak ground-truth kształtów danych frontu.
-6. Referencje READ-ONLY: `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` — wzorce API, **nigdy nie edytujesz**.
+4. [data-inventory.md](.github/docs/data-inventory.md) — **gotowa** inwentaryzacja (Faza 0.5): literały przepisane z `react-design/` (kształty `CAMPS`/`TRAINERS`/`POSTS`/`PARTNERS`/bonów), pola opcjonalne i warunki renderu, relacje, kształt pozycji koszyka, mapowanie na Woo/ACF/CPT, sygnatury helperów, otwarte kwestie. Traktuj jak ground-truth kształtów danych frontu.
+5. Referencje READ-ONLY: `woocommerce`, `go4taste-recipes-plugin`, `acf-pro` — wzorce API, **nigdy nie edytujesz**.
 
 > **Kiedy czytać [data-inventory.md](.github/docs/data-inventory.md):** obowiązkowo przed Fazą 2 (port React→HTML) i Fazą 5 (mapowanie na produkt Woo / pola ACF / CPT `trener`), oraz przy KAŻDEJ pracy dotykającej kształtów `CAMPS`/`TRAINERS`/`POSTS`/`PARTNERS`/bonu/koszyka lub relacji `coachSlugs↔trener` / `POSTS.author→trener`. Weryfikuj literały tam wypisane z realnym kodem — inwentaryzacja to zrzut ze stanu na Fazę 0.5, kod na dysku pozostaje najwyższym źródłem prawdy (poz. 1).
 
 ### Zasady nadrzędne
 
 - **READ-ONLY referencje są nienaruszalne.** Zero zmian w `woocommerce`, `go4taste-recipes-plugin`, `acf-pro`. Czytasz je jako źródło wzorców (szablony Woo, `acf_form()`, API ACF).
-- **Kod własny tylko w:** `tatrarunning-core`, `tatrarunning-theme`, `tatrarunning-aura` (oraz `react-design/`/`vanilla-design/` w meta na etapie frontu).
+- **Kod własny tylko w:** `tatrarunning-core`, `tatrarunning-theme` (oraz `react-design/`/`vanilla-design/` w meta na etapie frontu).
 - **Vertical slice.** Kod jednej funkcjonalności razem (dane→render), cienki bootstrap, zero abstrakcji „na zapas”. Slice nie przecieka między artefaktami.
 - **Zakres fazy jest granicą.** Nie dorabiasz wiringu, hooków, rejestracji ani nie dotykasz innego slice'a/repo, jeśli faza tego nie obejmuje. Jeśli coś poza zakresem jest naprawdę potrzebne — zgłaszasz to, nie robisz po cichu.
 - **Język:** polski (kod/komentarze techniczne EN tam, gdzie to konwencja; treści projektowe PL).
@@ -110,7 +108,7 @@ W tym projekcie **główna sesja Claude jest wykonawcą** cyklu fazowego (recenz
 
 - NIE edytujesz `woocommerce`, `go4taste-recipes-plugin`, `acf-pro`.
 - NIE wychodzisz poza zakres fazy (scope creep — nawet „ładny” — jest zakazany).
-- NIE mieszasz slice'ów ani artefaktów (core/theme/aura) w jednym kroku, gdy faza tego nie wymaga.
+- NIE mieszasz slice'ów ani artefaktów (core/theme) w jednym kroku, gdy faza tego nie wymaga.
 - NIE traktujesz planu/pamięci jako prawdy nad kodem — ground-truth rozstrzyga.
 - NIE recenzujesz własnej pracy jako „zielonej" — to robi recenzent (subagent) w izolowanej sesji.
 - NIE nanosisz poprawek z werdyktu recenzenta bez **akceptacji człowieka** — werdykt to wejście do decyzji, nie polecenie wykonania.
@@ -127,7 +125,6 @@ W tym projekcie **główna sesja Claude jest wykonawcą** cyklu fazowego (recenz
 ## Dokumenty referencyjne (źródła prawdy w tym folderze)
 
 - [plan.md](.github/docs/plan.md) — plan migracji, fazy, mapowanie React→vanilla→WP, model danych.
-- [aura.md](.github/docs/aura.md) — pełna specyfikacja wzorca Aura (4 stany, panel, Klaro, analityka GA4/sGTM).
 - [data-inventory.md](.github/docs/data-inventory.md) — inwentaryzacja widoków i grup danych (Faza 0.5, **gotowa**): kształty danych frontu, warunki renderu, relacje, mapowanie na Woo/ACF/CPT, otwarte kwestie. Czytaj przy porcie (Faza 2) i mapowaniu (Faza 5).
 - [ground-truth-start-fazy.prompt.md](.github/prompts/ground-truth-start-fazy.prompt.md) — kontrakt na start każdej fazy.
 - [.claude/agents/recenzent.md](.claude/agents/recenzent.md) — definicja subagenta-recenzenta cyklu.
@@ -137,7 +134,6 @@ W tym projekcie **główna sesja Claude jest wykonawcą** cyklu fazowego (recenz
 - Komunikacja i treści projektowe po polsku.
 - **Git / wersjonowanie:** kanoniczna procedura jest opisana poniżej w sekcji „Workflow git / wersjonowanie (commit → branch → PR → merge → tag)”.
 - Wtyczki docelowe wypychane na produkcję przez **WP Pusher**; bezpieczeństwo — **Wordfence**; cache — **LiteSpeed** (treści zależne od stanu: ESI / nie cache'ować, zob. [plan.md](.github/docs/plan.md)).
-- Zgody i bramkowanie embedów: **Klaro** (zob. [aura.md](.github/docs/aura.md)).
 - Newsletter/kontakt: **Gravity Forms** (+ Mailchimp add-on). Płatności: **PayU lub Przelewy24**.
 
 ## Workflow git / wersjonowanie (commit → branch → PR → merge → tag)
@@ -150,10 +146,9 @@ W tym projekcie **główna sesja Claude jest wykonawcą** cyklu fazowego (recenz
 |---|---|
 | `tatrarunning-core` | https://github.com/przemekcichon/tatrarunning-core |
 | `tatrarunning-theme` | https://github.com/przemekcichon/tatrarunning-theme |
-| `tatrarunning-aura` | https://github.com/przemekcichon/tatrarunning-aura |
 | `tatra-running-meta` | https://github.com/przemekcichon/tatra-running-meta |
 
-> Repozytoria `core`/`theme`/`aura` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
+> Repozytoria `core`/`theme` są dodatkowo wypychane na produkcję przez **WP Pusher**. `meta` jest tylko wersjonowane (bez deployu).
 
 **Cykl gitowy fazy — obowiązuje dla KAŻDEGO repo (w tym meta):**
 

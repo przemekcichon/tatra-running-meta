@@ -207,7 +207,17 @@ function ContactPage() {
               <div className="ct-card">
                 <div className="ct-card__head"><div className="ct-card__ic"><Icon name="pin" size={20} /></div><h3>Nasza siedziba</h3></div>
                 <p>ul. Kościelna 21, lok. 14<br/>34-500 Zakopane</p>
-                <PrivacyMap lat={49.2992} lng={19.9496} query="Kościelna 21 Zakopane" label="Tatra Running, Zakopane" className="ct-map" />
+                <div className="embed-frame ct-map">
+                  <iframe
+                    title="Mapa — Tatra Running, Zakopane"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=19.9376%2C49.2908%2C19.9616%2C49.3076&layer=mapnik&marker=49.2992%2C19.9496"
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', border: 0, display: 'block' }}
+                  />
+                  <a className="embed-frame__open" href="https://www.openstreetmap.org/?mlat=49.2992&mlon=19.9496#map=15/49.2992/19.9496" target="_blank" rel="noopener noreferrer">
+                    Większa mapa <Icon name="external" size={14} />
+                  </a>
+                </div>
               </div>
 
               <div className="ct-card">

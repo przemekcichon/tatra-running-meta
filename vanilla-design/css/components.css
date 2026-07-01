@@ -726,28 +726,6 @@
    ============================================================ */
 .acct { position: relative; display: flex; }
 
-/* AURA presence orb */
-@keyframes aura-spin { to { transform: rotate(360deg); } }
-.aura-mark { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; }
-.aura-mark__av { position: absolute; border-radius: 999px; overflow: hidden; }
-.aura-mark__ring { position: relative; }
-.aura-mark__ring.is-anon { animation: aura-spin 26s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .aura-mark__ring.is-anon { animation: none; } }
-
-.aura-orb-btn { position: relative; width: 46px; height: 46px; border: 0; background: none; padding: 0; display: grid; place-items: center; cursor: pointer; border-radius: 999px; transition: transform .15s; }
-.aura-orb-btn:hover { transform: translateY(-1px) scale(1.04); }
-.aura-orb-btn:active { transform: scale(.96); }
-.aura-orb-btn__glow { position: absolute; inset: -4px; border-radius: 999px; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: -1; }
-.aura-orb-btn:hover .aura-orb-btn__glow { opacity: 1; }
-
-/* AURA — 4 stany + panel obecności (Faza 4) */
-.aura-mark.is-unmeasured .aura-mark__ring circle { opacity: .4; }
-.aura-panel__presets { padding: 0 18px 4px; }
-.aura-trust { display: flex; justify-content: center; padding: 8px 18px 2px; }
-.aura-trust span { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; color: var(--muted); background: #faf9f5; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
-.aura-optout { width: 100%; border: 0; background: none; font: inherit; font-size: 12.5px; color: var(--muted); cursor: pointer; padding: 8px 12px; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
-.aura-optout:hover { color: var(--ink); }
-
 .acct-btn {
   width: 46px; height: 46px; border-radius: 999px; border: 1px solid var(--line-2);
   background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer;
@@ -815,10 +793,6 @@
 .set-head h3 { font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -0.02em; color: var(--ink); margin-top: 6px; }
 .set-head p { color: var(--muted); font-size: 14px; line-height: 1.5; margin-top: 8px; max-width: 52ch; }
 .set-body { padding: 8px 28px 22px; overflow-y: auto; }
-.set-aura { display: flex; align-items: center; gap: 13px; padding: 14px 16px; margin-top: 10px; background: #faf9f5; border: 1px solid var(--line); border-radius: 14px; }
-.set-aura__id { min-width: 0; }
-.set-aura__id b { display: block; font-size: 15px; color: var(--ink); font-weight: 700; }
-.set-aura__id span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 1px; }
 .set-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
 .preset { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; padding: 12px 8px; border: 1.5px solid var(--line-2); border-radius: 14px; background: var(--paper); cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
 .preset:hover { border-color: var(--ink); }

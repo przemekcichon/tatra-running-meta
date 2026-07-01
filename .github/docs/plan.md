@@ -4,17 +4,14 @@
 
 - Prototyp: React 18 (CDN UMD) + Babel Standalone, BEZ build-stepu. SPA z hash-routerem.
 - ~3500 linii, ~35 komponentów. Czysty CSS z tokenami (`styles.css` base + `app.css` komponenty).
-- Pliki: `index.html`, `data.jsx`, `ui.jsx`, `router.jsx`, `blocks.jsx`, `chrome.jsx`, `account.jsx`, `pages-*.jsx` (home/camp/shop/blog/team/legal/misc), `app.jsx`.
+- Pliki: `index.html`, `data.jsx`, `ui.jsx`, `router.jsx`, `blocks.jsx`, `chrome.jsx`, `pages-*.jsx` (home/camp/shop/blog/team/legal/misc), `app.jsx`.
 - Assets: `assets/*.webp` (logo, hero, team, trenerzy). `uploads/teksty-do-strony.md`.
 - **Środowisko WP dev:** Local (LocalWP), strona **Tatra Running New** (slug `tatra-running-new`), root `~\Local Sites\tatra-running-new\app\public`. Stan żywego WP odczytujemy narzędziem **`@localwp`** (read-only) — zob. [`copilot-instructions.md`](../copilot-instructions.md) → „Dostęp do żywej instancji WordPressa".
 
 ## Decyzje (ustalone z klientem)
 
 1. **Cel vanilla** = STATYCZNE, wielostronicowe HTML/CSS/JS — jeden plik HTML na typ szablonu WP (mapowanie 1:1 na `header.php` / `footer.php` / `page-*.php` / `single-*.php`).
-2. **AURA** jest **w pełni instalowana** (nie tylko wizualnie): orb obecności w navbarze + 4 stany + panel + warstwa analityczna. **Presety** zostają, ale **przemianowane na klimat tatrarunning.pl** (górsko-biegowy): *Na lekko* (wszystko włączone), *Szlakiem* (domyślny, wyważony), *Schronisko* (nic ekstra). Pełna specyfikacja: [`aura.md`](./aura.md).
-3. **Klaro JS** zarządza WSZYSTKIMI zgodami i bramkuje embedy (YouTube, mapy Google/OSM, pełny formularz). Zastępuje prototypowy system `consent` + `PrivacyMap` / `PrivacyVideo`. Zsynchronizowany z panelem Aury — zob. [`aura.md`](./aura.md).
-4. **Analityka** (zob. [`aura.md`](./aura.md)): przedzgodowa = **GA4 #1 sandbox** przez **server-side GTM** z **dobowym first-party cookie** (ślad ulotny); po zgodzie = **druga instancja GA4** (#2 produkcyjna).
-5. **Konfigurator bonów**: plan wysokopoziomowy teraz, szczegóły WooCommerce dopiero przy wdrożeniu.
+2. **Konfigurator bonów**: plan wysokopoziomowy teraz, szczegóły WooCommerce dopiero przy wdrożeniu.
 
 ## Mapowanie React → vanilla → WP
 
@@ -25,10 +22,7 @@
 | `ui.jsx` `Icon` (inline SVG) | sprite SVG / partial | sprite w motywie |
 | `ui.jsx` `zl()` formatter | JS util | `wc_price()` (PHP) |
 | `ui.jsx` Cart (localStorage) | makieta koszyka | WooCommerce koszyk + mini-cart fragments |
-| `account.jsx` auth/user | makieta konta | WooCommerce My Account |
-| `account.jsx` consent | Klaro JS | Klaro w motywie |
-| `account.jsx` AURA (orb + 4 stany + panel) | `aura.js` + panel (pełna instalacja) | `aura.js` w motywie; orb/panel nie-cacheowalne (ESI) |
-| Analityka (pomiar) | sGTM snippet + dobowe cookie | sGTM + GA4 #1 sandbox (przed zgodą) / GA4 #2 (po zgodzie) |
+| Konto w headerze | statyczny przycisk konta | WooCommerce My Account |
 | `data.jsx` `CAMPS` | dane statyczne | **produkt WooCommerce** (kat. `obozy` + podkat. biegowe/skitour/kids/junior) + ACF; slug przez `%product_cat%` → `/obozy/...` |
 | `data.jsx` `TRAINERS` | dane statyczne | CPT „trener” + ACF (relacja produkt-obóz ↔ trener) |
 | `data.jsx` `POSTS` | dane statyczne | natywne wpisy WP + kategorie |
@@ -48,7 +42,7 @@ Osobny dokument, tworzony w Fazie 0.5 na podstawie analizy plików `.jsx`. Cel: 
    - **nazwa grupy** (np. „Hero”, „Karta obozu”, „Plan dnia”, „Co obejmuje / nie obejmuje”, „Karta trenera”, „Konfigurator bonu”, „Meta wpisu”),
    - **pola** w grupie (nazwa, typ: tekst / liczba / cena / data / lista / obraz / relacja / boolean),
    - **powtarzalność** (pojedyncze vs. repeater/lista),
-   - **źródło w prototypie** (`data.jsx`: `CAMPS`, `TRAINERS`, `POSTS`, `PARTNERS`, `VOUCHER_TEMPLATES`, `VOUCHER_AMOUNTS`; albo treść statyczna / generowana, np. AURA),
+   - **źródło w prototypie** (`data.jsx`: `CAMPS`, `TRAINERS`, `POSTS`, `PARTNERS`, `VOUCHER_TEMPLATES`, `VOUCHER_AMOUNTS`; albo treść statyczna / generowana),
    - **wstępny cel w WP** (natywne pole Woo / ACF field / taksonomia / treść statyczna) — kolumna pomocnicza dla Fazy 5.
 3. **Pola współdzielone między widokami** (np. obóz pojawia się jako karta na Home i w archiwum, i jako pełny rekord na single) — zaznaczyć, by zmapować raz.
 
@@ -80,10 +74,8 @@ Na produkcie (kat. `obozy`), poza natywnymi polami Woo (cena, stan magazynowy = 
 ## Treści NIE-cacheowalne (LiteSpeed ESI / lazy JS)
 
 - Licznik koszyka (cart badge), stan mini-koszyka.
-- Stan konta w headerze (zalogowany/niezalogowany, `AccountMenu`).
+- Stan konta w headerze (zalogowany/niezalogowany).
 - Nonce'y formularzy / WooCommerce.
-- Tożsamość AURA / orb / panel obecności (per-przeglądarka, zależne od cookie/seeda).
-- Wskaźnik zaufania w panelu Aury („X z 4 wstrzymanych”).
 
 ## Organizacja repozytorium
 
@@ -120,7 +112,7 @@ Zasada nadrzędna pozostaje bez zmian: zadanie ground-truth jest TYLKO DO ODCZYT
 /regulamin.html  /zasady-newslettera.html  /prywatnosc.html  /dokumenty.html
 /partials/header.html, footer.html
 /css/tokens.css, base.css, components.css, pages.css
-/js/header.js, reveal.js, accordion.js, cart.js, voucher.js, wizard.js, aura.js, embeds.js, klaro.config.js
+/js/header.js, reveal.js, accordion.js, cart.js, voucher.js, wizard.js
 /assets/ (istniejące webp)
 ```
 
@@ -131,12 +123,11 @@ Zasada nadrzędna pozostaje bez zmian: zadanie ground-truth jest TYLKO DO ODCZYT
 - **Faza 1 — Design system:** reorganizacja `styles.css` + `app.css` w `css/tokens|base|components|pages`. CSS w większości reużywalny 1:1.
 - **Faza 2 — Statyczne szablony HTML:** port JSX→semantyczny HTML dla każdego typu strony. Header/Footer jako partiale.
 - **Faza 3 — Vanilla JS** (progressive enhancement): `header.js` (scroll-hide, mobile menu, dropdown), `reveal.js` (IntersectionObserver), `accordion.js` (plan obozu), galeria, makieta koszyka, konfigurator bonów + live preview (`VoucherArt`), `wizard.js` (kreator ACF-form: kroki, walidacja, pasek postępu).
-- **Faza 4 — Aura + Klaro + analityka** (pełna instalacja wg [`aura.md`](./aura.md)): `aura.js` (orb, 4 stany, awatar seeded RNG → SVG, panel obecności z presetami *Na lekko / Szlakiem / Schronisko*), `klaro.config.js` (zgody + bramkowanie embedów), `embeds.js` (warianty prywatne YT/mapy/formularz), warstwa analityki (sGTM + dobowe cookie / GA4 #1 sandbox przed zgodą, GA4 #2 po zgodzie), synchronizacja Aura ↔ Klaro.
 - **Faza 5 — Dokument mapowania na WP:** plik HTML→szablon, dane→produkt Woo/ACF/CPT trener, interakcje→wtyczki, kreator front-end→`acf_form()`. Notatki nt. ESI/non-cache, integracji wtyczek, permalinków `%product_cat%`.
 
 ## Zakres
 
-**WŁĄCZONE:** pełny rewrite vanilla wszystkich stron, design system, moduły JS, **pełna instalacja Aury** (orb + 4 stany + panel + analityka wg [`aura.md`](./aura.md)), Klaro (zgody + embedy), dokument mapowania WP.
+**WŁĄCZONE:** pełny rewrite vanilla wszystkich stron, design system, moduły JS, dokument mapowania WP.
 
 **WYŁĄCZONE (na później):** faktyczny motyw WP (PHP), szczegóły produktu Woo/bonów, konfiguracja/licencje wtyczek (PayU/P24, ACF PRO, Gravity Forms, Wordfence, WP Pusher), konfiguracja serwera LiteSpeed/ESI (tylko notatki).
 
@@ -145,8 +136,6 @@ Zasada nadrzędna pozostaje bez zmian: zadanie ground-truth jest TYLKO DO ODCZYT
 - Serwowanie lokalne, przeklikanie każdej strony, brak błędów w konsoli.
 - Stan żywego WP (po migracji slice'ów na WP) weryfikujemy przez **`@localwp`** (read-only) zamiast zgadywania: aktywne wtyczki, wersja WP/Woo, opcje, slugi/permalinki, dane CPT/ACF.
 - RWD (mobile menu, header scroll-hide), Lighthouse (a11y/perf).
-- Klaro: baner zgody, zapamiętanie wyboru, bramkowanie embedów działa; synchronizacja z panelem Aury.
-- Aura: orb przechodzi przez 4 stany, panel steruje integracjami, opt-out (Unmeasured) nie tworzy ID; analityka — GA4 #1 sandbox przed zgodą (dobowe cookie), GA4 #2 po zgodzie.
 - Porównanie wizualne z prototypem React (pixel parity kluczowych sekcji).
 
 ## Do rozważenia

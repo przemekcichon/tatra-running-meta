@@ -219,7 +219,6 @@ Routing: `react-design/router.jsx` → `parseHash()`; montaż: `react-design/app
 | 16 | `#/newsletter` | `NewsletterThanksPage` | `newsletter.html` | `page-*.php` |
 | — | (drawer/koszyk) | `CartDrawer` | `koszyk.html` + drawer | Woo cart/mini-cart |
 | — | (chrome) | `Header` / `Footer` / `MobileMenu` | `partials/header.html`, `footer.html` | `header.php`/`footer.php` |
-| — | (overlay) | `AccountMenu` / `SettingsModal` / `AuthModal` | `js/aura.js` + panel | Aura (motyw, ESI) |
 
 > `SimplePage` (`pages-misc.jsx`) to fallback dla nieistniejącego obozu/trenera/wpisu — nie samodzielny widok.
 > `#/kosz`/koszyk nie ma własnej trasy; koszyk to drawer (`CartDrawer`) montowany globalnie w `App`.
@@ -323,7 +322,7 @@ Routing: `react-design/router.jsx` → `parseHash()`; montaż: `react-design/app
 |---|---|---|---|---|
 | Hero | eyebrow/tytuł/lead | 1 | `static` | `static` |
 | Formularz | imię/nazwisko/e-mail/telefon/temat/treść; stan `sent` | 1 | stan UI (mock) | Gravity Forms |
-| Siedziba + mapa | adres `ul. Kościelna 21, lok. 14, 34-500 Zakopane`; `PrivacyMap lat=49.2992 lng=19.9496` | 1 | `static` + `account.jsx` `PrivacyMap` | `static` + Klaro/embed |
+| Siedziba + mapa | adres `ul. Kościelna 21, lok. 14, 34-500 Zakopane`; statyczny OSM iframe (`lat=49.2992 lng=19.9496`) | 1 | `static` (OSM embed) | `static` + embed mapy |
 | E-mail | `contact@tatrarunning.pl` | 1 | `static` | `static` |
 | Numery | Kuba Osiecki `+48 500 152 300`, Magda `+48 505 104 062` | `[]` (2) | `static` | `static` |
 | Nr konta | `86 1050 1445 1000 0090 9778 4764` | 1 | `static` | `static` |
@@ -380,35 +379,14 @@ Routing: `react-design/router.jsx` → `parseHash()`; montaż: `react-design/app
 | Topbar kontakt | `+48 500 152 300`, `contact@tatrarunning.pl`, „14. sezon" | 1 | `static` | `static` |
 | Logo | `assets/logo.webp` | 1 | `static` | media |
 | Koszyk (badge) | `cart.count` | 1 | `useCart` | `runtime` (non-cache) |
-| Konto (orb) | `AccountMenu` (Aura) | 1 | `account.jsx` | `runtime` (Aura, ESI) |
+| Konto | statyczny przycisk konta (link) | 1 | `chrome.jsx` (statyczny) | WooCommerce My Account |
 | Footer — newsletter | `NewsletterSignup` (input e-mail, modal potwierdzenia) | 1 | stan UI (mock) | Gravity Forms + Mailchimp |
 | Footer — kolumny | „Wyprawy"/„Tatra Running"/„Pomoc"/„Kontakt" (linki) | `[]` | `static` | menu WP |
 | Footer — dół | „© 2026 Tatra Running" + `SocialRow` | 1 | `static` | `static` |
 
 ---
 
-## 4. Aura / Konto / Prywatność / Embedy — `account.jsx`
-
-> Wszystko **generowane po stronie klienta** (`runtime`), trzymane w `localStorage`. Docelowo: motyw/wtyczka Aura, treści **nie-cacheowalne** (ESI). Pełna spec: [aura.md](./aura.md).
-
-| Grupa | Pola / literały | Źródło | Cel WP |
-|---|---|---|---|
-| Klucze storage | `tr_prefs_v1` (`PREFS_KEY`), `tr_user_v1` (`USER_KEY`), `tr_aura_seed` (`SEED_KEY`), `tr_cart_v1` (`LS_KEY`, ui.jsx) | `runtime` | `runtime`/cookie |
-| Preferencje domyślne | `DEFAULT_PREFS`: `contactChannel:'auto'`, `youtube:'ask'`, `maps:'osm'`, `consent:{analytics:false, personalization:false, marketing:false}` | `static` (default) | `runtime` |
-| Tożsamość Aura | `seed` (int) → `auraIdentity`: `name` (`ADJ`×`ANIMAL`), `tag` (hex4), `hue` (`AURA_HUES`) | `runtime` (seeded RNG `rng`) | `runtime` |
-| Awatar | `AuraAvatar` (SVG deterministyczny z `seed`), `AuraMark` (orb ring; `claimed` = zalogowany) | `runtime` | `runtime` |
-| Presety | `PRESETS`: `smooth`/`balanced`/`sanctuary`; `PRESET_META`: `label`+`sub` | `static` | `runtime` |
-| Kontakt (kanał) | `resolveContact(channel)` → `tel:+48500152300` (`PHONE_E164`) / `https://wa.me/48500152300` (`WA_NUMBER`); hook `useContactLink` | `runtime` | `runtime` |
-| Auth (mock) | `AuthModal`: `setUser({name, email})` — front-only, bez backendu | `runtime` (mock) | WooCommerce My Account |
-| Zgody | `consent.{analytics, personalization, marketing}` (Toggle) | `runtime` | Klaro |
-| Embed mapa | `PrivacyMap` (`lat`/`lng`/`query`/`label`/`zoom`): OSM iframe vs przekierowanie Google wg `prefs.maps` | `runtime` | Klaro + embed |
-| Embed wideo | `PrivacyVideo` (`id`/`title`): `youtube-nocookie` iframe vs placeholder wg `prefs.youtube` | `runtime` | Klaro + embed |
-
-> **Uwaga (presety vs plan):** w kodzie `PRESET_META` ma etykiety `Płynnie` / `Równowaga` / `Sanktuarium`. Plan ([plan.md](./plan.md)) i [aura.md](./aura.md) wymagają przemianowania na klimat górsko-biegowy: *Na lekko* / *Szlakiem* / *Schronisko*. Rozbieżność do rozstrzygnięcia w Fazie 4.
-
----
-
-## 5. Pola / komponenty współdzielone między widokami
+## 4. Pola / komponenty współdzielone między widokami
 
 | Element | Definicja | Używany w | Pola |
 |---|---|---|---|
@@ -430,7 +408,7 @@ Routing: `react-design/router.jsx` → `parseHash()`; montaż: `react-design/app
 
 ---
 
-## 6. Helpery do reużycia (sygnatury)
+## 5. Helpery do reużycia (sygnatury)
 
 ```js
 // ui.jsx
@@ -449,14 +427,6 @@ CampCard({ camp })  ·  StatusBadge({ status, spotsLeft })  ·  SectionHeading({
 
 // router.jsx
 useRoute()  ·  go(path)  ·  Link({ to, … })
-
-// account.jsx
-useAccount()                  // { prefs, setPref, setConsent, applyPreset, user, setUser, seed, regenIdentity, … }
-useContactLink()              // → props <a> wg prefs.contactChannel
-auraIdentity(seed)            // → { name, tag, hue }
-rng(seed)                     // deterministyczny PRNG [0,1)
-PrivacyMap({ lat, lng, query, label, zoom, className })
-PrivacyVideo({ id, title, className })
 
 // pages-blog.jsx
 fmtDate(iso)                  // ISO → '12 czerwca 2026' (PL_MONTHS)
@@ -479,7 +449,7 @@ initials(name)               // 'Magda Derezińska-Osiecka' → 'MD'
 
 ---
 
-## 7. Treści statyczne / generowane (NIE z `data.jsx`)
+## 6. Treści statyczne / generowane (NIE z `data.jsx`)
 
 | Treść | Lokalizacja | Charakter |
 |---|---|---|
@@ -490,14 +460,12 @@ initials(name)               // 'Magda Derezińska-Osiecka' → 'MD'
 | `PAY` + nr konta + dane kontaktowe | `pages-shop.jsx`, `pages-misc.jsx` | `static` |
 | `NAV`/`TOPNAV`/`SOCIALS` | `chrome.jsx` | `static` (→ menu/Customizer) |
 | Statystyki/„wartości"/korzyści (inline) | `pages-home.jsx`, `pages-shop.jsx`, `pages-misc.jsx` | `static` (tablice inline w JSX) |
-| Aura (tożsamość, presety, awatar) | `account.jsx` | `runtime` (seeded, non-cache) |
 
 ---
 
-## 8. Otwarte kwestie (do rozstrzygnięcia w kolejnych fazach)
+## 7. Otwarte kwestie (do rozstrzygnięcia w kolejnych fazach)
 
 1. **`audience`** — kategorie `kids`/`junior` w `CAMP_CATS` filtrują po nieistniejącym polu → puste. W WP wymaga taksonomii/atrybutu produktu (Faza 5). *(zob. 1.1)*
 2. **`featured`** (CAMPS) — ustawione, ale nieczytane w prototypie. Decyzja: czy „wyróżniony obóz" ma istnieć w WP. *(zob. 1.1)*
-3. **Nazwy presetów Aury** — kod ma `Płynnie`/`Równowaga`/`Sanktuarium`; plan/aura.md wymagają `Na lekko`/`Szlakiem`/`Schronisko`. *(zob. §4)*
-4. **`VOUCHER_TEMPLATES.id` vs `theme`** — relacja UI używa `theme`, nie `id`. Spójność kluczy przy modelu Woo bonu. *(zob. 1.3)*
-5. **Treść dokumentów prawnych** — placeholder; finalna treść prawna przed publikacją. *(zob. 12–15)*
+3. **`VOUCHER_TEMPLATES.id` vs `theme`** — relacja UI używa `theme`, nie `id`. Spójność kluczy przy modelu Woo bonu. *(zob. 1.3)*
+4. **Treść dokumentów prawnych** — placeholder; finalna treść prawna przed publikacją. *(zob. 12–15)*

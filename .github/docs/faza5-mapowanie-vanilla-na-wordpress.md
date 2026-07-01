@@ -39,9 +39,6 @@ Dokument realizacyjny fazy 5 (zakres z `plan.md`): mapowanie `HTML -> szablony W
 
 | Plik JS | Zakres ladowania w WP | Powod |
 |---|---|---|
-| `js/klaro.config.js` | globalnie (`wp_enqueue_scripts`) + przed skryptami zaleznymi | Dostarcza `window.TRKlaro` i event `aura:klaro-change` |
-| `js/aura.js` | globalnie | Orb/panel `.acct`, stany Aury, modal ustawien |
-| `js/embeds.js` | globalnie (lub strony z `.embed-frame`) | Bramkowanie embedow po zgodzie |
 | `js/cart.js` | globalnie dla badge + szczegolnie `is_cart()` i `is_checkout()` | API koszyka makiety, `window.TRCart`, `window.zl` |
 | `js/voucher.js` | tylko strona bonow (`is_product_category('bony')` lub dedykowany template) | Konfigurator bonu (`#amt-grid`) |
 | `js/accordion.js` | tylko single obozu (`is_singular('product')`) | Accordion planu `.acc` |
@@ -86,26 +83,7 @@ Sugerowany kontrakt krokow kreatora obozu (do implementacji w kolejnej fazie):
 - WP target: `WC()->cart` + natywne fragmenty Woo (badge/licznik).
 - Uwagi: typy pozycji `camp` i `voucher` sa prezentacyjne; w WP oba przypadki to produkty Woo (z roznymi kategoriami i metadata).
 
-## 4.2 Aura i zgody
-
-- Vanilla klucze: `tr_prefs_v1`, `tr_user_v1`, `tr_aura_seed`, `tr_aura_day`, `aura_unmeasured`, cookie `aura_klaro`.
-- WP target:
-	- zgody: Klaro cookie + Consent Mode sygnaly,
-	- tozsamosc Aury: first-party cookie (seed dzienny/trwaly),
-	- dane zalogowania: `wp_get_current_user()` / konto Woo.
-
-Strategia migracji kluczy (zeby uniknac dryfu implementacyjnego):
-
-| Klucz producenta | Rola teraz (vanilla) | Kontrakt docelowy WP |
-|---|---|---|
-| `aura_klaro` | zgody uslug | zostaje cookie Klaro (zrodlo prawdy zgody po stronie klienta) |
-| `tr_aura_day` | seed dobowy (`ephemeral`) | migrowany do first-party cookie dobowego (`Max-Age=86400`) |
-| `tr_aura_seed` | seed trwaly (`recognised`/`linked`) | migrowany do trwalego first-party cookie |
-| `aura_unmeasured` | opt-out lokalny | mapowany na sygnal opt-out + stan zgody (brak identyfikatora) |
-| `tr_prefs_v1` | preferencje UX panelu Aury | pozostaje po stronie klienta (localStorage) lub cookie preferencji, bez powiazania z tozsamoscia konta |
-| `tr_user_v1` | mock zalogowania | wygaszany; zastepuje go natywne konto WP/Woo (`wp_get_current_user()`) |
-
-## 4.3 Produkty, trenerzy, partnerzy
+## 4.2 Produkty, trenerzy, partnerzy
 
 - Oboz i bon: produkty Woo (`post_type=product`) + kategorie:
 	- glowna: `obozy` albo `bony`,
@@ -113,7 +91,7 @@ Strategia migracji kluczy (zeby uniknac dryfu implementacyjnego):
 - Trenerzy: CPT `trener` + ACF.
 - Partnerzy: ACF repeater (na stronie partnerow lub ACF Options), bez CPT.
 
-## 4.4 Blog i strony statyczne
+## 4.3 Blog i strony statyczne
 
 - `blog.html` / `blog-post.html` -> natywne posty WordPress.
 - `regulamin`, `zasady-newslettera`, `prywatnosc`, `dokumenty` -> zwykle strony (`page`).
@@ -125,14 +103,11 @@ Strategia migracji kluczy (zeby uniknac dryfu implementacyjnego):
 | WooCommerce | produkty obozow/bonow, koszyk, kasa, konto |
 | ACF PRO | pola produktow obozowych, CPT `trener`, repeater partnerow |
 | Gravity Forms | `kontakt` + newsletter (frontend formularze) |
-| Klaro | zarzadzanie zgodami + bramkowanie embedow |
-| sGTM + GA4 #1/#2 | pomiar przed/po zgodzie, zgodnie z Aura |
 | Mailchimp add-on | obsluga zapisu newslettera przez Gravity Forms |
 | PayU / Przelewy24 | bramki platnosci WooCommerce |
 
 ## 6. Elementy nie-cacheowalne (LiteSpeed/ESI albo lazy JS)
 
-- `.acct` (orb i panel Aury)
 - `.cart-badge`
 - stan konta uzytkownika (gosc/zalogowany)
 - nonce i dynamiczne fragmenty Woo
