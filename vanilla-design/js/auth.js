@@ -77,7 +77,7 @@
   /* Wyzwalacz: przycisk konta w headerze (link -> modal). */
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('.acct-btn, [data-auth-open]');
-    if (trigger) { e.preventDefault(); openLogin('login'); return; }
+    if (trigger) { e.preventDefault(); openLogin(trigger.getAttribute('data-auth-open') || 'login'); return; }
 
     var t = e.target.closest('[data-auth]');
     if (!t) return;
