@@ -72,9 +72,4 @@
     if (qbtns[1]) qbtns[1].addEventListener('click', function () { if (qty < 10) { qty++; render(); } });
   }
   render();
-
-  /* po dodaniu do koszyka (obsluga w cart.js) zwin sheet */
-  sheet.querySelectorAll('[data-add-camp]').forEach(function (b) {
-    b.addEventListener('click', closeSheet);
-  });
 })();

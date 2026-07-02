@@ -200,6 +200,7 @@
           sub: btn.dataset.sub, price: parseInt(btn.dataset.price, 10),
           qty: parseInt(btn.dataset.qty, 10) || 1, image: btn.dataset.image
         });
+        if (btn.dataset.goto) { window.location.href = btn.dataset.goto; }
       });
     });
   }
