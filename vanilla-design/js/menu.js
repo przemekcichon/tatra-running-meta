@@ -14,6 +14,7 @@
 
   function open() {
     overlay.hidden = false;
+    document.body.classList.add('mm-open');
     document.body.style.overflow = 'hidden';
     if (opener) opener.setAttribute('aria-expanded', 'true');
     var closeBtn = overlay.querySelector('.mm-top .burger');
@@ -22,6 +23,7 @@
 
   function close() {
     overlay.hidden = true;
+    document.body.classList.remove('mm-open');
     document.body.style.overflow = '';
     if (opener) opener.setAttribute('aria-expanded', 'false');
     if (opener && typeof opener.focus === 'function') { try { opener.focus(); } catch (e) {} }
