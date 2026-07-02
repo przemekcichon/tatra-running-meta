@@ -23,12 +23,15 @@ function App() {
     default: page = <HomePage />;
   }
   return (
-    <CartProvider>
-      <Header route={route} />
-      <ScrollKey k={route.name + (route.params.slug || '')}>{page}</ScrollKey>
-      <Footer />
-      <CartDrawer />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Header route={route} />
+        <ScrollKey k={route.name + (route.params.slug || '')}>{page}</ScrollKey>
+        <Footer />
+        <CartDrawer />
+        <AuthModal />
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

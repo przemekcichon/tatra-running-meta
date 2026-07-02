@@ -47,6 +47,7 @@ function SocialRow({ className, variant }) {
 
 function Header({ route }) {
   const cart = useCart();
+  const auth = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
   useEffect(() => {
@@ -123,7 +124,7 @@ function Header({ route }) {
               <Icon name="phone" size={19} />
             </a>
             <div className="acct">
-              <Link to="/kontakt" className="acct-btn" aria-label="Konto"><Icon name="user" size={20} /></Link>
+              <button type="button" className="acct-btn" aria-label="Konto" onClick={() => auth.openAuth('login')}><Icon name="user" size={20} /></button>
             </div>
             <button className="cart-btn" onClick={() => cart.setOpen(true)} aria-label={`Koszyk, ${cart.count} pozycji`}>
               <Icon name="bag" size={20} />
@@ -143,6 +144,7 @@ function Header({ route }) {
 
 function MobileMenu({ onClose }) {
   const cart = useCart();
+  const auth = useAuth();
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -173,12 +175,9 @@ function MobileMenu({ onClose }) {
       </div>
       <div className="mm-foot">
         <div className="mm-acct">
-          <Link className="btn btn--ghost" to="/kontakt" onClick={onClose}>
+          <button className="btn btn--ghost" onClick={() => { onClose(); auth.openAuth('login'); }}>
             <Icon name="user" size={18} /> Zaloguj się
-          </Link>
-          <Link className="btn btn--ghost" to="/kontakt" onClick={onClose}>
-            <Icon name="sliders" size={18} /> Ustawienia
-          </Link>
+          </button>
         </div>
         <button className="btn btn--accent btn--block btn--lg" onClick={() => {onClose();cart.setOpen(true);}}>
           <Icon name="bag" size={20} /> Koszyk {cart.count > 0 ? `(${cart.count})` : ''}
