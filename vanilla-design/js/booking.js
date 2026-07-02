@@ -38,7 +38,24 @@
   }
   function toggleSheet() { sheet.classList.contains('is-open') ? closeSheet() : openSheet(); }
 
-  if (grab) grab.addEventListener('click', toggleSheet);
+  if (grab) {
+    grab.addEventListener('click', toggleSheet);
+
+    /* gest przeciagniecia (mobile): w gore = rozwin, w dol = zwin.
+       maly ruch traktujemy jak tap -> obsluguje handler click powyzej */
+    var startY = null;
+    grab.addEventListener('touchstart', function (e) {
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    grab.addEventListener('touchend', function (e) {
+      if (startY === null) return;
+      var endY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : startY;
+      var dy = endY - startY;
+      startY = null;
+      if (dy < -40) { e.preventDefault(); openSheet(); }        /* swipe up */
+      else if (dy > 40) { e.preventDefault(); closeSheet(); }   /* swipe down */
+    }, { passive: false });
+  }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
   mq.addEventListener('change', function () { if (!mq.matches) closeSheet(); });
 
