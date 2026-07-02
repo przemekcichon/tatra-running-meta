@@ -270,7 +270,11 @@
           </section>
         </div>
 
-        <aside class="booking booking--sheet">
+        <aside class="booking booking--sheet" data-deposit="2000" data-full="6999">
+          <button class="booking__grab" type="button" aria-expanded="false" aria-label="Szczegóły rezerwacji">
+            <span class="booking__grabbar"></span>
+            <span class="booking__hint"><svg class="booking__hint-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg><span class="booking__hint-txt">Przeciągnij, aby zobaczyć szczegóły</span></span>
+          </button>
           <div class="booking__scroll">
             <div class="booking__head">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -385,6 +389,8 @@
   </footer>
   <script src="js/cart.js" defer></script>
   <script src="js/accordion.js" defer></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/menu.js" defer></script>
   <script src="js/auth.js" defer></script>
 </body>
 </html>

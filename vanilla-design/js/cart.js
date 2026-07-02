@@ -197,7 +197,8 @@
       btn.addEventListener('click', function () {
         add({
           key: btn.dataset.key, type: 'camp', title: btn.dataset.title,
-          sub: btn.dataset.sub, price: parseInt(btn.dataset.price, 10), qty: 1, image: btn.dataset.image
+          sub: btn.dataset.sub, price: parseInt(btn.dataset.price, 10),
+          qty: parseInt(btn.dataset.qty, 10) || 1, image: btn.dataset.image
         });
       });
     });
