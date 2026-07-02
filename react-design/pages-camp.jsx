@@ -35,7 +35,6 @@ function Accordion({ items }) {
 
 function BookingCard({ camp }) {
   const cart = useCart();
-  const contactLink = useContactLink();
   const [qty, setQty] = useState(1);
   const [expanded, setExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 760px)').matches);
@@ -121,7 +120,7 @@ function BookingCard({ camp }) {
               <span><Icon name="check" size={15} /> Składki TFG i TFP</span>
             </div>
 
-            <a className="btn btn--ghost btn--block booking__call" {...contactLink}>
+            <a className="btn btn--ghost btn--block booking__call" href="tel:+48500152300">
               <Icon name="phone" size={17} /> Masz pytania? +48 500 152 300
             </a>
           </div>

@@ -47,7 +47,7 @@ function SocialRow({ className, variant }) {
 
 function Header({ route }) {
   const cart = useCart();
-  const contactLink = useContactLink();
+  const auth = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
   useEffect(() => {
@@ -85,7 +85,7 @@ function Header({ route }) {
       <div className="topbar">
         <div className="topbar__inner">
           <div className="topbar__left">
-            <a className="topbar__item" href="tel:+48500152300" {...contactLink}><Icon name="phone" size={15} /> +48 500 152 300</a>
+            <a className="topbar__item" href="tel:+48500152300"><Icon name="phone" size={15} /> +48 500 152 300</a>
             <a className="topbar__item topbar__item--mail" href="mailto:contact@tatrarunning.pl"><Icon name="mail" size={15} /> contact@tatrarunning.pl</a>
             <span className="topbar__item topbar__item--hours"><Icon name="mountain" size={15} /> 14. sezon w górach</span>
           </div>
@@ -120,10 +120,12 @@ function Header({ route }) {
             <Link to="/bony" className="btn btn--ghost btn--sm bony-btn" style={{ gap: 8 }}>
               <Icon name="gift" size={18} /> Bony
             </Link>
-            <a href="tel:+48500152300" className="phone-btn" aria-label="Zadzwoń +48 500 152 300" {...contactLink}>
+            <a href="tel:+48500152300" className="phone-btn" aria-label="Zadzwoń +48 500 152 300">
               <Icon name="phone" size={19} />
             </a>
-            <AccountMenu />
+            <div className="acct">
+              <button type="button" className="acct-btn" aria-label="Konto" onClick={() => auth.openAuth('login')}><Icon name="user" size={20} /></button>
+            </div>
             <button className="cart-btn" onClick={() => cart.setOpen(true)} aria-label={`Koszyk, ${cart.count} pozycji`}>
               <Icon name="bag" size={20} />
               {cart.count > 0 && <span className="cart-badge">{cart.count}</span>}
@@ -142,7 +144,7 @@ function Header({ route }) {
 
 function MobileMenu({ onClose }) {
   const cart = useCart();
-  const acc = useAccount();
+  const auth = useAuth();
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -173,17 +175,8 @@ function MobileMenu({ onClose }) {
       </div>
       <div className="mm-foot">
         <div className="mm-acct">
-          {acc.user ? (
-            <button className="btn btn--ghost" onClick={() => { onClose(); acc.setUser(null); }}>
-              <Icon name="logout" size={18} /> Wyloguj
-            </button>
-          ) : (
-            <button className="btn btn--ghost" onClick={() => { onClose(); acc.openAuth('login'); }}>
-              <Icon name="user" size={18} /> Zaloguj się
-            </button>
-          )}
-          <button className="btn btn--ghost" onClick={() => { onClose(); acc.openSettings(); }}>
-            <Icon name="sliders" size={18} /> Ustawienia
+          <button className="btn btn--ghost" onClick={() => { onClose(); auth.openAuth('login'); }}>
+            <Icon name="user" size={18} /> Zaloguj się
           </button>
         </div>
         <button className="btn btn--accent btn--block btn--lg" onClick={() => {onClose();cart.setOpen(true);}}>
