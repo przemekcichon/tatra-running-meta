@@ -47,6 +47,11 @@
     grab.addEventListener('touchstart', function (e) {
       startY = e.touches[0].clientY;
     }, { passive: true });
+    grab.addEventListener('touchmove', function (e) {
+      /* w trakcie ciagniecia uchwytu blokuj scroll strony, by gest
+         nie byl "zjadany" przez przewijanie (istotne na fizycznym dotyku) */
+      if (startY !== null && e.cancelable) e.preventDefault();
+    }, { passive: false });
     grab.addEventListener('touchend', function (e) {
       if (startY === null) return;
       var endY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : startY;
