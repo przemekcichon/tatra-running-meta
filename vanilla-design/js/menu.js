@@ -7,6 +7,21 @@
 (function () {
   'use strict';
 
+  /* header scroll-hide: scroll w dol chowa naglowek, w gore pokazuje;
+     przy samej gorze zawsze widoczny. Port z react-design/chrome.jsx. */
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var lastY = window.scrollY || 0;
+    window.addEventListener('scroll', function () {
+      if (document.body.classList.contains('mm-open')) return; /* menu otwarte: nie chowaj */
+      var y = window.scrollY || 0;
+      if (y <= 8) { header.classList.remove('site-header--hidden'); lastY = y; return; }
+      if (y > lastY + 6) header.classList.add('site-header--hidden');        /* w dol */
+      else if (y < lastY - 6) header.classList.remove('site-header--hidden'); /* w gore */
+      lastY = y;
+    }, { passive: true });
+  }
+
   var overlay = document.getElementById('mobile-menu');
   if (!overlay) return;
 
